@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %} 
+{% block body %}
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <p class="h5">Categories</p>
+      </div>
+{% block section %} 
+
+<p><a href="{{ path('admin_category', {id: ''}) }}"><button type="button" class="btn btn-info">Create new category</button></a></p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for row in pagination %} 
+    <tr>
+      <td>{{ row.name }}</td>
+      <td>{{ row.description }}</td>
+      <td><a href="{{ path('admin_category', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_category', {id: row.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+    </tr>
+{% endfor %} 
+  </tbody>
+</table>
+ 
+<div class="navigation"> 
+{{ knp_pagination_render(pagination) }} 
+</div> 
+ 
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %} 
+{% block body %}
+
+<form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" value="{% if searchQuery is defined and searchQuery is not empty%}{{ searchQuery }}{% endif %}" type="text" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"">Search</button>
+</form>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <p class="h5">Loans</p>
+      </div>
+{% block section %} 
+ 
+<p><a href="{{ path('admin_loan', {id: ''}) }}"><button type="button" class="btn btn-info">Create new loan</button></a></p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Item</th>
+      <th scope="col">Loaner</th>
+      <th scope="col">Loan date</th>
+      <th scope="col">Return date</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for row in pagination %} 
+    <tr>
+      <td>{{ row.item.name }}</td>
+      <td>{{ row.loaner }}</td>
+      <td>{{ row.loanDate is empty ? "" : row.loanDate|date("Y-m-d") }}</td>
+      <td>{{ row.returnDate is empty ? "" : row.returnDate|date("Y-m-d") }}</td>
+      <td><a href="{{ path('admin_loan', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_loan', {id: row.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+    </tr>
+{% endfor %} 
+  </tbody>
+</table>
+ 
+<div class="navigation"> 
+{{ knp_pagination_render(pagination) }} 
+</div> 
+ 
+{% endblock %}
+{% endblock %}

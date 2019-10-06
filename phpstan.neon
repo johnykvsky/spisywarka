@@ -1,0 +1,13 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+parameters:
+    checkNullables: true
+    inferPrivatePropertyTypeFromConstructor: true
+    symfony:
+#		container_xml_path: %rootDir%/../../../var/cache/dev/AppDevDebugProjectContainer.xml # or srcDevDebugProjectContainer.xml for Symfony 4+
+#		container_xml_path: %rootDir%/../../../var/cache/dev/srcDevDebugProjectContainer.xml  # or srcDevDebugProjectContainer.xml for Symfony 4+
+        container_xml_path: %rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml
+    excludes_analyse:
+        - %rootDir%/../../../src/App/DataFixtures/*
+        - %rootDir%/../../../src/Migrations/*
