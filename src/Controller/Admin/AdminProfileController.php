@@ -5,13 +5,13 @@ namespace App\Controller\Admin;
 use App\Repository\UserRepository;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
-//use App\CommandHandler\Exception\ItemNotDeletedException;
 use Symfony\Component\Form\FormError;
 use Knp\Component\Pager\PaginatorInterface; 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -60,13 +60,19 @@ class AdminProfileController extends AbstractController
      */
     public function profile(Request $rawRequest): Response
     {
+        /** @var User */
         $user = $this->getUser();
 
-        if (!$user) {
+        if (empty($user)) {
             return $this->redirectToRoute('logout');
         }
 
-        $userDTO = new UserDTO($user->getFirstName(), $user->getLastName(), $user->getEmail(), null);
+        $userDTO = new UserDTO(
+            $user->getFirstName(),
+            $user->getLastName(),
+            $user->getEmail(),
+            null
+        );
         $form = $this->createForm(\App\Form\Type\UserProfileType::class, $userDTO);
         $form->handleRequest($rawRequest);
 
@@ -93,16 +99,5 @@ class AdminProfileController extends AbstractController
         return $this->render('security/profile.html.twig', [
             'form' => $form->createView()
         ]);
-    }
-
-    /**
-     * @param string $id
-     * @return FormInterface
-     */
-    private function getForm(UuidInterface $id): FormInterface
-    {
-        $user = $this->repository->getIUser($id);
-        $userDTO = $this->itemService->fillItemDTO($item);
-        return $this->createForm(\App\Form\Type\ItemType::class, $itemDTO);
     }
 }

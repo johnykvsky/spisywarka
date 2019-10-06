@@ -29,7 +29,7 @@ class UserDTO {
      */
     private $email;
     /**
-     * @var string
+     * @var string|null
      * @Type("string")
      * @Assert\Length(max=255)
      */
@@ -41,6 +41,7 @@ class UserDTO {
      * @param string $firstName
      * @param string $lastName
      * @param string $email
+     * @param string|null $plainPassword
      */
     public function __construct(string $firstName,
                                 string $lastName,

@@ -24,7 +24,7 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param UuidInterface $itemId
+     * @param UuidInterface $userId
      * @throws UserNotFoundException
      * @return User
      */

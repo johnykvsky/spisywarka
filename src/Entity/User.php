@@ -31,21 +31,21 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=250, unique=true)
      */
     protected $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=180, unique=true)
+     * @ORM\Column(name="first_name", type="string", length=250)
      */
     protected $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=180, unique=true)
+     * @ORM\Column(name="last_name", type="string", length=250)
      */
     protected $lastName;
 
@@ -58,7 +58,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=100)
+     * @ORM\Column(name="password", type="string", length=250)
      */
     protected $password;
 
@@ -119,7 +119,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -226,7 +226,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -234,7 +234,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getLastName(): ?string
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -277,7 +277,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return EventStatusEnum
+     * @return UserStatusEnum
      */
     public function getStatus(): UserStatusEnum
     {

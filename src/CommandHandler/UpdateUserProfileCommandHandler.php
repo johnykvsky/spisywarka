@@ -23,6 +23,10 @@ class UpdateUserProfileCommandHandler implements CommandHandlerInterface
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
 
     /**
      * @param MessageBusInterface $eventBus
