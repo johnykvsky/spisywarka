@@ -63,7 +63,7 @@ class AdminProfileController extends AbstractController
         $user = $this->getUser();
 
         if (!$user) {
-            //return $this->redirectToRoute('logout');
+            return $this->redirectToRoute('logout');
         }
 
         $userDTO = new UserDTO($user->getFirstName(), $user->getLastName(), $user->getEmail(), null);
