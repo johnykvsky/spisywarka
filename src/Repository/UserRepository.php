@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use App\Repository\Exception\UserNotFoundException;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,6 +21,20 @@ class UserRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    /**
+     * @param UuidInterface $itemId
+     * @throws UserNotFoundException
+     * @return User
+     */
+    public function getUser(UuidInterface $userId): User
+    {
+        if ($user = $this->find($userId)) {
+            return $user;
+        }
+
+        throw new UserNotFoundException('User not found');
     }
 
     /**
