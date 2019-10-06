@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use App\Repository\Exception\ItemCollectionNotFoundException;
+use Doctrine\ORM\Query;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @method ItemCollection|null find($id, $lockMode = null, $lockVersion = null)
@@ -30,7 +32,7 @@ class ItemCollectionRepository extends ServiceEntityRepository
      * @throws ItemCollectionNotFoundException
      * @return itemCollection
      */
-    public function getItemCollection(Item $item, Collection $collection): itemCollection
+    public function getItemCollection(Item $item, Collection $collection): ItemCollection
     {
         if ($itemCollection = $this->findOneBy(['item'=> $item, 'collection'=>$collection])) {
             return $itemCollection;

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %} 
+{% block body %}
+
+{% block section %} 
+<p class="h5">Items in Collection: {{ collection.name }}</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for row in pagination %} 
+    <tr>
+      <td>{{ row.name }}</td>
+      <td>{{ row.description }}</td>
+      <td><a href="{{ path('admin_delete_collection_item', {itemId: row.id, collectionId: collection.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+    </tr>
+{% endfor %} 
+  </tbody>
+</table>
+ 
+<div class="navigation"> 
+{{ knp_pagination_render(pagination) }} 
+</div> 
+ 
+{% endblock %}
+{% endblock %}

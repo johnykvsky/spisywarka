@@ -19,7 +19,9 @@
     <tr>
       <td>{{ row.name }}</td>
       <td>{{ row.description }}</td>
-      <td><a href="{{ path('admin_collection', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_collection', {id: row.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+      <td><a href="{{ path('admin_collection', {id: row.id}) }}">
+      <button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_collection', {id: row.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a> <a href="{{ path('admin_collection_items', {id: row.id.toString}) }}"><button type="button" class="btn btn-link">Items</button></a>
+      </td>
     </tr>
 {% endfor %} 
   </tbody>

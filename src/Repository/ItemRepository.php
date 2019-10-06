@@ -84,6 +84,20 @@ class ItemRepository extends ServiceEntityRepository
         ])
         ->getQuery();
     }
+
+    /**
+     * @param UuidInterface $collectionId
+     * @return Query
+     */
+    public function listAllItemsInCollection(UuidInterface $collectionId): Query
+    {
+        $qb = $this->createQueryBuilder('i')->innerJoin('i.collections', 'c');
+        return $qb->where('c.collection = :collectionId')
+        ->setParameters([
+            'collectionId' => $collectionId,
+        ])
+        ->getQuery();
+    }
     
     /**
      * @return array
