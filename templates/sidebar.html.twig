@@ -1,0 +1,98 @@
+ <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('admin_dashboard') }}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Item
+      </div>
+
+      <!-- Nav Item - Items Collapse Menu -->
+      <li class="nav-item {{ activeMenu(['admin_items', 'admin_item']) }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseItems" aria-expanded="true" aria-controls="collapseItems">
+          <i class="fas fa-fw fa-database"></i>
+          <span>Items</span>
+        </a>
+        <div id="collapseItems" class="collapse {{ collapseItem(['admin_items', 'admin_item']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Manage items:</h6>
+            <a class="collapse-item" href="{{ path('admin_items') }}">List items</a>
+            <a class="collapse-item" href="{{ path('admin_item') }}">Add item</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Loans Collapse Menu -->
+      <li class="nav-item {{ activeMenu(['admin_loans', 'admin_loan']) }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseILoans" aria-expanded="true" aria-controls="collapseILoans">
+          <i class="fas fa-fw fa-list"></i>
+          <span>Loans</span>
+        </a>
+        <div id="collapseILoans" class="collapse {{ collapseItem(['admin_loans', 'admin_loan']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Manage loans:</h6>
+            <a class="collapse-item" href="{{ path('admin_loans') }}">List loans</a>
+            <a class="collapse-item" href="{{ path('admin_loan') }}">Add loan</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Categories Collapse Menu -->
+      <li class="nav-item {{ activeMenu(['admin_categories', 'admin_category']) }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories">
+          <i class="fas fa-fw fa-archive"></i>
+          <span>Categories</span>
+        </a>
+        <div id="collapseCategories" class="collapse {{ collapseItem(['admin_categories', 'admin_category']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Manage categories:</h6>
+            <a class="collapse-item" href="{{ path('admin_categories') }}">List categories</a>
+            <a class="collapse-item" href="{{ path('admin_category') }}">Add category</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Categories Collapse Menu -->
+      <li class="nav-item {{ activeMenu(['admin_collections', 'admin_collection']) }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCollections" aria-expanded="true" aria-controls="collapseCollections">
+          <i class="fas fa-fw fa-sitemap"></i>
+          <span>Collections</span>
+        </a>
+        <div id="collapseCollections" class="collapse {{ collapseItem(['admin_collections', 'admin_collection']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Manage collections:</h6>
+            <a class="collapse-item" href="{{ path('admin_collections') }}">List collections</a>
+            <a class="collapse-item" href="{{ path('admin_collection') }}">Add collection</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>

@@ -1,98 +1,25 @@
- <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+            <div class="topbar-divider d-none d-sm-block"></div>
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-      </a>
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ app.user.firstName }} {{ app.user.lastName }}</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('admin_dashboard') }}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Item
-      </div>
-
-      <!-- Nav Item - Items Collapse Menu -->
-      <li class="nav-item {{ activeMenu(['admin_items', 'admin_item']) }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseItems" aria-expanded="true" aria-controls="collapseItems">
-          <i class="fas fa-fw fa-database"></i>
-          <span>Items</span>
-        </a>
-        <div id="collapseItems" class="collapse {{ collapseItem(['admin_items', 'admin_item']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Manage items:</h6>
-            <a class="collapse-item" href="{{ path('admin_items') }}">List items</a>
-            <a class="collapse-item" href="{{ path('admin_item') }}">Add item</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Loans Collapse Menu -->
-      <li class="nav-item {{ activeMenu(['admin_loans', 'admin_loan']) }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseILoans" aria-expanded="true" aria-controls="collapseILoans">
-          <i class="fas fa-fw fa-list"></i>
-          <span>Loans</span>
-        </a>
-        <div id="collapseILoans" class="collapse {{ collapseItem(['admin_loans', 'admin_loan']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Manage loans:</h6>
-            <a class="collapse-item" href="{{ path('admin_loans') }}">List loans</a>
-            <a class="collapse-item" href="{{ path('admin_loan') }}">Add loan</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Categories Collapse Menu -->
-      <li class="nav-item {{ activeMenu(['admin_categories', 'admin_category']) }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories">
-          <i class="fas fa-fw fa-archive"></i>
-          <span>Categories</span>
-        </a>
-        <div id="collapseCategories" class="collapse {{ collapseItem(['admin_categories', 'admin_category']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Manage categories:</h6>
-            <a class="collapse-item" href="{{ path('admin_categories') }}">List categories</a>
-            <a class="collapse-item" href="{{ path('admin_category') }}">Add category</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Categories Collapse Menu -->
-      <li class="nav-item {{ activeMenu(['admin_collections', 'admin_collection']) }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCollections" aria-expanded="true" aria-controls="collapseCollections">
-          <i class="fas fa-fw fa-sitemap"></i>
-          <span>Collections</span>
-        </a>
-        <div id="collapseCollections" class="collapse {{ collapseItem(['admin_collections', 'admin_collection']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Manage collections:</h6>
-            <a class="collapse-item" href="{{ path('admin_collections') }}">List collections</a>
-            <a class="collapse-item" href="{{ path('admin_collection') }}">Add collection</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
+          </ul>

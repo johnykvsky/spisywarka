@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Traits\HasTimestamps;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
+use App\Entity\Enum\UserStatusEnum;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -33,6 +34,26 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      */
     protected $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="first_name", type="string", length=180, unique=true)
+     */
+    protected $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string", length=180, unique=true)
+     */
+    protected $lastName;
+
+    /**
+     * @var UserStatusEnum
+     * @ORM\Embedded(class="App\Entity\Enum\UserStatusEnum")
+     */
+    private $status;
 
     /**
      * @var string
@@ -115,6 +136,28 @@ class User implements UserInterface
     }
 
     /**
+     * @param string $firstName
+     *
+     * @return User
+     */
+    public function setFirstName(string $firstName): User
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    /**
+     * @param string $lastName
+     *
+     * @return User
+     */
+    public function setLastName(string $lastName): User
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getPassword(): string
@@ -181,6 +224,22 @@ class User implements UserInterface
     }
 
     /**
+     * @return string
+     */
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    /**
      * @return string The username
      */
     public function getUsername(): string
@@ -214,6 +273,25 @@ class User implements UserInterface
     public function setPlainPassword(?string $plainPassword): User
     {
         $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
+     * @return EventStatusEnum
+     */
+    public function getStatus(): UserStatusEnum
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param UserStatusEnum $status
+     * @return User
+     */
+    public function setStatus(UserStatusEnum $status): self
+    {
+        $this->status = $status;
+
         return $this;
     }
 }

@@ -12,7 +12,7 @@ class AdminDashboard extends AbstractController
      * @Route("/dashboard", name="admin_dashboard", methods={"GET"})
      * @return Response
      */
-    public function createOrEditItem(): Response
+    public function dashboard(): Response
     {
         return $this->render('dashboard.html.twig');
     }

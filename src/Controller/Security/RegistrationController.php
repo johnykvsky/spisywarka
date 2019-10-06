@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Ramsey\Uuid\Uuid;
+use App\Entity\Enum\UserStatusEnum;
 
 class RegistrationController extends Controller
 {
@@ -31,6 +32,7 @@ class RegistrationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $encoder->encodePassword($user, $user->getPlainPassword() ?? '');
             $user->setPassword($password);
+            $user->setStatus(UserStatusEnum::active());
             $userRepository->save($user);
 
             $this->addFlash('success', "Your accound was created");

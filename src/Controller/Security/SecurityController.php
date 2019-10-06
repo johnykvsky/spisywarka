@@ -22,6 +22,10 @@ class SecurityController extends Controller
             $error = new FormError("There is an error: " . $error->getMessage());
             $form->addError($error);
         };
+
+        if ($form->isSubmitted() && $form->isValid() && !$error) {
+            return $this->redirectToRoute('admin_dashboard');
+        }
         
         return $this->render(
             'security/login.html.twig',

@@ -38,6 +38,12 @@
 # Build data
 /build/
 
+# Build data
+/var/
+
+# Build data
+/coverage/
+
 # Composer PHAR
 /composer.phar
 
