@@ -18,6 +18,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Service\ItemService;
 use Symfony\Component\Form\FormInterface;
+use Swagger\Annotations as SWG;
 
 class AdminItemController extends AbstractController
 {
@@ -129,7 +130,17 @@ class AdminItemController extends AbstractController
     }
 
     /** 
-     * @Route("/api/items/autocomplete", name="admin_items_autocomplete") 
+     * @Route("/api/items/autocomplete", name="admin_items_autocomplete", methods={"GET"}) 
+     *
+     * @SWG\Tag(name="Autocomplete")
+     * @SWG\Get(
+     *     @SWG\Parameter(name="q", in="path", type="string", description="Search query")
+     * )
+     * @SWG\Response(
+     *     response="200",
+     *     description="Matched items"
+     * )
+     *
      * @param Request $request
      * @return JsonResponse
      */ 

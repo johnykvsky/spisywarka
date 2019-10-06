@@ -18,6 +18,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Service\CategoryService;
 use Symfony\Component\Form\FormInterface;
+use Swagger\Annotations as SWG;
 
 class AdminCategoryController extends AbstractController
 {
@@ -126,7 +127,17 @@ class AdminCategoryController extends AbstractController
     }
 
     /** 
-     * @Route("/api/categories/autocomplete", name="admin_categories_autocomplete") 
+     * @Route("/api/categories/autocomplete", name="admin_categories_autocomplete", methods={"GET"}) 
+     *
+     * @SWG\Tag(name="Autocomplete")
+     * @SWG\Get(
+     *     @SWG\Parameter(name="q", in="path", type="string", description="Search query")
+     * )
+     * @SWG\Response(
+     *     response="200",
+     *     description="Matched categories"
+     * )
+     *
      * @param Request $request
      * @return JsonResponse
      */ 

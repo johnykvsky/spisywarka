@@ -134,7 +134,7 @@ class LoanController extends AbstractController
      * @ParamConverter("request", converter="fos_rest.request_body")
      *
      * @SWG\Tag(name="Loan")
-     * @SWG\Post(
+     * @SWG\Patch(
      *     @SWG\Parameter(
      *          name="body",
      *          in="body",
