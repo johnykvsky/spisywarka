@@ -28,7 +28,7 @@
       <td>{{ row.loaner }}</td>
       <td>{{ row.loanDate is empty ? "" : row.loanDate|date("Y-m-d") }}</td>
       <td>{{ row.returnDate is empty ? "" : row.returnDate|date("Y-m-d") }}</td>
-      <td><a href="{{ path('admin_loan', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_loan', {id: row.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+      <td><a href="{{ path('admin_loan', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_loan', {id: row.id}) }}" data-href="{{ path('admin_delete_loan', {id: row.id}) }}" data-toggle="modal" data-target="#confirmModal"><button type="button" class="btn btn-danger">Delete</button></a></td>
     </tr>
 {% endfor %} 
   </tbody>

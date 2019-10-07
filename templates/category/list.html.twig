@@ -19,7 +19,7 @@
     <tr>
       <td>{{ row.name }}</td>
       <td>{{ row.description }}</td>
-      <td><a href="{{ path('admin_category', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_category', {id: row.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+      <td><a href="{{ path('admin_category', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> <a href="{{ path('admin_delete_category', {id: row.id}) }}" data-href="{{ path('admin_delete_category', {id: row.id}) }}" data-toggle="modal" data-target="#confirmModal"><button type="button" class="btn btn-danger">Delete</button></a></td>
     </tr>
 {% endfor %} 
   </tbody>
