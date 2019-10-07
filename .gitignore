@@ -43,6 +43,7 @@
 
 # Build data
 /coverage/
+/coverage.xml
 
 # Composer PHAR
 /composer.phar

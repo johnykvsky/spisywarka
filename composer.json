@@ -75,6 +75,11 @@
         "symfony/polyfill-php56": "*"
     },
     "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=phpcs.xml --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
+        "fix-style": "phpcbf -p --standard=phpcs.xml --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
+        "phpstan": "vendor/bin/phpstan analyse src --level=0",
+        "phpstan-max": "vendor/bin/phpstan analyse src --level=7",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
