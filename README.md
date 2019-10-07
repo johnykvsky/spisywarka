@@ -44,6 +44,8 @@ $ composer install
 $ bin/console doctrine:migrations:migrate
 ```
 
+Then fire up your web server - can be `php -S localhost:8000` from ./public/ - and go to /register
+
 ## Testing
 
 ``` bash
