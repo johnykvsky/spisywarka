@@ -69,7 +69,7 @@ class CategoryRepository extends ServiceEntityRepository
      */
     public function listAllCategories(): array
     {
-        return $this->findAll([], ['name' => 'ASC']);
+        return $this->findBy([], ['name' => 'ASC']);
     }
 
     /**
