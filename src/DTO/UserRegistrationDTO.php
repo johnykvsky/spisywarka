@@ -8,19 +8,19 @@ use JMS\Serializer\Annotation\Type;
 
 class UserRegistrationDTO {
     /**
-     * @var string
+     * @var string|null
      * @Type("string")
      * @Assert\Length(max=255)
      */
     private $firstName;
     /**
-     * @var string
+     * @var string|null
      * @Type("string")
      * @Assert\Length(max=255)
      */
     private $lastName;
     /**
-     * @var string
+     * @var string|null
      * @Type("string")
      * @Assert\Length(max=255)
      */

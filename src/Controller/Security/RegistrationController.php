@@ -20,6 +20,19 @@ use Symfony\Component\Messenger\MessageBusInterface;
 class RegistrationController extends Controller
 {
     /**
+     * @var MessageBusInterface
+     */
+    private $commandBus;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+    /**
+     * @var UserRepository
+     */
+    private $repository;
+
+    /**
      * @param MessageBusInterface $commandBus
      * @param LoggerInterface $logger
      * @param UserRepository $repository
