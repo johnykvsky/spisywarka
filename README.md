@@ -9,31 +9,47 @@ Technical info: Symfony 4.3 on PHP 7.2 with use of Message Bus and UUIDs (no aut
 What's included, frontend:
 
  * Full Item, Category, Collection, Loan management via admin panel
- * CRUD with use of API core backend parts: Commands and Command Handlers
  * User registration, login, logout and profile
  * SB Admin 2 template with dark sidebar
  * Modal confirmation for record delete and logout
  * Select2 autocomplete for Item/Category/Collection searching via ajax request
- * Forms with use of DTO and DataTransformers
 
 What's included, backend:
 
  * Full Item, Category, Collection, Loan management via JSON API
+ * Frontend CRUD use core API backend parts: Commands and CommandHandlers
  * API documentation (Swagger) via /api/doc
  * Full use of Message Bus, Requests, Commands and Command Handlers
  * Support for Event Bus (working, just not doing anything serious)
+ * Forms with use of DTO and DataTransformers
  * Tests included!
  * PhpDocs all the way!
  * Type Hinting friendly!
+ * Phpstan on board!
+ * PhpStorm will love this...
 
 What's planned:
 
  * JWT Token Authenticator
  * Slugs
  * User management
- * Allow multiple users see only their data (via Doctrine filters)
+ * Allow for multiple users see only their own data (via Doctrine filters)
  * Translations
  * Guest user pages, for showing single items and items in given category/collection
+
+Current API flow:
+ * Initial validation of incoming request data on Request
+ * If validation fail, request is stopped here, errors are returned to client
+ * If validation pass, data is transfered to Command and dispatched to CommandHandler
+ * CommandHandler double check everything, try to do the job and throw custom Exception if anything goes wrong
+
+Current CRUD flow:
+ * Existing data is transfered to DTO or empty DTO is created
+ * After submit, form make first step validation of send data
+ * If validation fail, request is stopped here, errors are shown to the user
+ * If validation pass, data is transfered from DTO to Command and dispatched to CommandHandler
+ * CommandHandler double check everything, try to do the job and throw custom Exception if anything goes wrong
+ * Any CommandHandler errors are attached to form and shown to the user
 
 ## Install
 
