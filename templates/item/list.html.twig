@@ -33,7 +33,7 @@
       <a href="{{ path('admin_item', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> 
       <a href={{ path('admin_delete_item', {id: row.id}) }}" data-href="{{ path('admin_delete_item', {id: row.id}) }}" data-toggle="modal" data-target="#confirmModal"><button type="button" class="btn btn-danger" >Delete</button></a>
       {% if row.loaned %}
-        <a href="{{ path('admin_loan', {id: row.loaned.id.toString}) }}"><button type="button" class="btn btn-link">Loaned</button></a>
+        <a href="{{ path('admin_loan', {id: row.loaned.id.toString}) }}"><button type="button" class="btn btn-light">Loaned</button></a>
       {% else %}
         <a href="{{ path('admin_loan', {'i': row.id.toString}) }}"><button type="button" class="btn btn-link">Loan</button></a>
       {% endif %}

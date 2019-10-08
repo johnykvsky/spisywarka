@@ -146,9 +146,8 @@ class AdminItemController extends AbstractController
     public function autocompleteAction(Request $request): JsonResponse
     {
         $result = array();
-        $searchQuery = $request->query->get('q');
-        $searchQuery = urldecode($searchQuery);
-        $searchQuery = preg_replace('/[^[:alnum:]]/', '', $searchQuery);
+        $q = $request->query->get('q');
+        $searchQuery = filter_var(urldecode($q), FILTER_SANITIZE_STRING);
 
         $items = $this->repository->autocompleteItems($searchQuery);
 

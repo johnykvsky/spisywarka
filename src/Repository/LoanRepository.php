@@ -71,6 +71,7 @@ class LoanRepository extends ServiceEntityRepository
         ->createQueryBuilder('l')
         ->innerJoin('l.item', 'i')
         ->select('i.id, i.name, l.loaner, l.loanDate, l.returnDate')
+        ->add('orderBy', 'l.loanDate ASC')
         ->getQuery()
         ->execute();
     }
@@ -81,12 +82,13 @@ class LoanRepository extends ServiceEntityRepository
     public function listAllLoans(?string $searchQuery = ''): Query
     {
         if (empty($searchQuery)) {
-            return $this->createQueryBuilder('l')->getQuery();
+            return $this->createQueryBuilder('l')->add('orderBy', 'l.loanDate ASC')->getQuery();
         }
 
         $qb = $this->createQueryBuilder('l')->innerJoin('l.item', 'i');
         return $qb->where($qb->expr()->like('i.name', ':searchQuery'))
         ->orWhere($qb->expr()->like('l.loaner', ':searchQuery'))
+        ->add('orderBy', 'l.loanDate ASC')
         ->setParameters([
             'searchQuery' => "%{$searchQuery}%",
         ])

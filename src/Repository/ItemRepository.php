@@ -72,13 +72,14 @@ class ItemRepository extends ServiceEntityRepository
     public function listAllItems(?string $searchQuery = ''): Query
     {
         if (empty($searchQuery)) {
-            return $this->createQueryBuilder('i')->getQuery();
+            return $this->createQueryBuilder('i')->add('orderBy', 'i.name ASC')->getQuery();
         }
 
         $qb = $this->createQueryBuilder('i');
         return $qb->where($qb->expr()->like('i.name', ':searchQuery'))
         ->orWhere($qb->expr()->like('i.author', ':searchQuery'))
         ->orWhere($qb->expr()->like('i.description', ':searchQuery'))
+        ->add('orderBy', 'i.name ASC')
         ->setParameters([
             'searchQuery' => "%{$searchQuery}%",
         ])
@@ -93,6 +94,7 @@ class ItemRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('i')->innerJoin('i.collections', 'c');
         return $qb->where('c.collection = :collectionId')
+        ->add('orderBy', 'i.name ASC')
         ->setParameters([
             'collectionId' => $collectionId,
         ])
@@ -107,6 +109,7 @@ class ItemRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('i')
         ->innerJoin('i.categories', 'c')
         ->where('c.category = :categoryId')
+        ->add('orderBy', 'i.name ASC')
         ->setParameters([
             'categoryId' => $categoryId,
         ])
@@ -122,6 +125,7 @@ class ItemRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('i')
         ->innerJoin('i.collections', 'c')
         ->where('c.collection = :collectionId')
+        ->add('orderBy', 'i.name ASC')
         ->setParameters([
             'collectionId' => $collectionId,
         ])
@@ -139,6 +143,7 @@ class ItemRepository extends ServiceEntityRepository
         return $qb->where($qb->expr()->like('i.name', ':searchQuery'))
         ->orWhere($qb->expr()->like('i.author', ':searchQuery'))
         ->orWhere($qb->expr()->like('i.description', ':searchQuery'))
+        ->add('orderBy', 'i.name ASC')
         ->setParameters([
             'searchQuery' => "%{$searchQuery}%",
         ])

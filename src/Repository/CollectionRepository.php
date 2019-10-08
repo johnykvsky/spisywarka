@@ -69,7 +69,7 @@ class CollectionRepository extends ServiceEntityRepository
      */
     public function listAllCollections(): array
     {
-        return $this->findAll();
+        return $this->findAll([], ['name' => 'ASC']);
     }
 
     /**
@@ -81,6 +81,7 @@ class CollectionRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('c');
         return $qb->where($qb->expr()->like('c.name', ':searchQuery'))
         ->orWhere($qb->expr()->like('c.description', ':searchQuery'))
+        ->add('orderBy', 'c.name ASC')
         ->setParameters([
             'searchQuery' => "%{$searchQuery}%",
         ])
