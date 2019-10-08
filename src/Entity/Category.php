@@ -46,6 +46,12 @@ class Category implements \JsonSerializable
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ItemCategory", mappedBy="category")

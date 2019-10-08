@@ -81,6 +81,12 @@ class Item implements \JsonSerializable
     private $url;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+    /**
      * @var ?\DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -335,6 +341,11 @@ class Item implements \JsonSerializable
         return $this->loaned;
     }
 
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
     /**
      * @param Category $category
      * @return bool
@@ -411,7 +422,8 @@ class Item implements \JsonSerializable
             'url' => $this->getUrl(),
             'collections' => $this->getItemCollections(),
             'categories' => $this->getItemCategories(),
-            'loaned' => $this->getLoaned()
+            'loaned' => $this->getLoaned(),
+            'slug' => $this->getSlug(),
         ];
     }
 }
