@@ -117,9 +117,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -224,17 +224,17 @@ class User implements UserInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getLastName(): ?string
+    public function getLastName(): string
     {
         return $this->lastName;
     }

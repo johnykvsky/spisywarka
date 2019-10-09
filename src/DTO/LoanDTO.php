@@ -14,7 +14,7 @@ class LoanDTO {
      */
     private $id;
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
      * @Assert\NotBlank()
      * @Assert\Uuid()
@@ -40,19 +40,18 @@ class LoanDTO {
     /**
      * LoanDTO constructor.
      * @param string|null $id
-     * @param string|null $itemId
+     * @param string $itemId
      * @param string|null $loaner
      * @param \DateTime|null $loanDate
      * @param \DateTime|null $returnDate
 
      */
     public function __construct(?string $id,
-                                ?string $itemId,
+                                string $itemId,
                                 ?string $loaner,
                                 ?\DateTime $loanDate,
                                 ?\DateTime $returnDate)
     {
-
         $this->id = $id;
         $this->itemId = $itemId;
         $this->loaner = $loaner;
@@ -81,15 +80,11 @@ class LoanDTO {
     }
 
     /**
-     * @return ?UuidInterface
+     * @return UuidInterface
      */
-    public function getItemId(): ?UuidInterface
+    public function getItemId(): UuidInterface
     {
-        if (!empty($this->itemId)) {
-            return Uuid::fromString($this->itemId);
-        }
-
-        return null;
+        return Uuid::fromString($this->itemId);
     }
 
     /**

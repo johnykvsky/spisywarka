@@ -65,6 +65,12 @@ class AdminLoanController extends AbstractController
     public function createOrEditILoan(?string $id, Request $rawRequest): Response
     {
         $itemId = $rawRequest->query->get('i');
+
+        if (empty($id) && empty($itemId)) {
+            $this->addFlash('danger','Please create loan from Items page');
+            return $this->redirectToRoute('admin_loans');
+        }
+
         $form = $this->getForm($id, $itemId);
         $form->handleRequest($rawRequest);
 
@@ -129,6 +135,7 @@ class AdminLoanController extends AbstractController
 
     /**
      * @param string|null $id
+     * @param string|null $itemId
      * @return FormInterface
      */
     private function getForm($id = null, $itemId = null): FormInterface
@@ -144,7 +151,5 @@ class AdminLoanController extends AbstractController
             $loanDTO = $this->loanService->getLoanDTOForItem($itemId);
             return $this->createForm(\App\Form\Type\LoanType::class, $loanDTO);
         }
-
-        return $this->createForm(\App\Form\Type\LoanType::class);
     }
 }

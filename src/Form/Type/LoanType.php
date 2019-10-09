@@ -73,10 +73,6 @@ final class LoanType extends AbstractType  implements DataMapperInterface
      */
     public function mapDataToForms($loanDTO, $forms): void
     {
-        if (empty($loanDTO)) {
-            $loanDTO = new LoanDTO(null, null, null, null, null);
-        }
-
         $forms = iterator_to_array($forms);
         $forms['item']->setData($loanDTO->getItemId());
         $forms['loaner']->setData($loanDTO->getLoaner());

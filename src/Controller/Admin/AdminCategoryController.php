@@ -18,9 +18,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Service\CategoryService;
 use Symfony\Component\Form\FormInterface;
 use Swagger\Annotations as SWG;
+use App\Traits\RequestQueryTrait;
 
 class AdminCategoryController extends AbstractController
 {
+    use RequestQueryTrait;
+
     /**
      * @var MessageBusInterface
      */
@@ -143,10 +146,7 @@ class AdminCategoryController extends AbstractController
     public function autocompleteAction(Request $request): JsonResponse
     {
         $result = array();
-        $q = $request->query->get('q');
-        $searchQuery = filter_var(urldecode($q), FILTER_SANITIZE_STRING);
-
-        $categories = $this->repository->autocompleteItems($searchQuery);
+        $categories = $this->repository->autocomplete($this->getFromRequest($request, 'q', true));
 
         foreach ($categories as $category) {
             $result[] = ['id' => $category->getId()->toString(), 'text'=>$category->getName()];

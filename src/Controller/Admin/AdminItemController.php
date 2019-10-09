@@ -18,9 +18,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Service\ItemService;
 use Symfony\Component\Form\FormInterface;
 use Swagger\Annotations as SWG;
+use App\Traits\RequestQueryTrait;
 
 class AdminItemController extends AbstractController
 {
+    use RequestQueryTrait;
+
     /**
      * @var MessageBusInterface
      */
@@ -149,7 +152,7 @@ class AdminItemController extends AbstractController
         $q = $request->query->get('q');
         $searchQuery = filter_var(urldecode($q), FILTER_SANITIZE_STRING);
 
-        $items = $this->repository->autocompleteItems($searchQuery);
+        $items = $this->repository->autocomplete($this->getFromRequest($request, 'q', true));
 
         foreach ($items as $item) {
             $result[] = ['id' => $item->getId()->toString(), 'text'=>$item->getName()];

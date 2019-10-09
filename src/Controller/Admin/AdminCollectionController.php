@@ -18,9 +18,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Service\CollectionService;
 use Symfony\Component\Form\FormInterface;
 use Swagger\Annotations as SWG;
+use App\Traits\RequestQueryTrait;
 
 class AdminCollectionController extends AbstractController
 {
+    use RequestQueryTrait;
+
     /**
      * @var MessageBusInterface
      */
@@ -146,7 +149,7 @@ class AdminCollectionController extends AbstractController
         $q = $request->query->get('q');
         $searchQuery = filter_var(urldecode($q), FILTER_SANITIZE_STRING);
 
-        $collections = $this->repository->autocompleteItems($searchQuery);
+        $collections = $this->repository->autocomplete($this->getFromRequest($request, 'q', true));
 
         foreach ($collections as $collection) {
             $result[] = ['id' => $collection->getId()->toString(), 'text'=>$collection->getName()];

@@ -76,12 +76,12 @@ class CollectionRepository extends ServiceEntityRepository
      * @param string|null $searchQuery
      * @return array
      */
-    public function autocompleteItems(?string $searchQuery): array
+    public function autocomplete(?string $searchQuery): array
     {
         $qb = $this->createQueryBuilder('c');
         return $qb->where($qb->expr()->like('c.name', ':searchQuery'))
         ->orWhere($qb->expr()->like('c.description', ':searchQuery'))
-        ->add('orderBy', 'c.name ASC')
+        ->orderBy('c.name' ,'ASC')
         ->setParameters([
             'searchQuery' => "%{$searchQuery}%",
         ])
