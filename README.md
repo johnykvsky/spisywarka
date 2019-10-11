@@ -22,6 +22,7 @@ What's included, backend:
  * Full use of Message Bus, Requests, Commands and Command Handlers
  * Support for Event Bus (working, just not doing anything serious)
  * Forms with use of DTO and DataTransformers, no entities
+ * JWT Token Authenticator
  * Tests included!
  * PhpDocs all the way!
  * Type Hinting friendly!
@@ -29,8 +30,7 @@ What's included, backend:
  * PhpStorm will love this...
 
 What's planned:
-
- * JWT Token Authenticator
+ 
  * Guest user pages, for showing single items and items in given category/collection
  * User management
  * Allow for multiple users see only their own data (via Doctrine filters)
@@ -59,7 +59,15 @@ $ composer install
 $ bin/console doctrine:migrations:migrate
 ```
 
-Then fire up your web server - can be `php -S localhost:8000` from ./public/ - and go to /register
+Then fire up your web server - can be `php -S localhost:8000` from ./public/
+
+## Authorization
+
+For CRUD, go to `/register` (to create user) and later to `/login`
+
+For API, go to `/register` (to create user) and later to `/api/login`, sent POST request with email and password. You will get `token` as a response - put it in header Authorization, "Bearer _token_" and start making requests. Token is valid for 30 minutes, to refresh just go (with valid token in Authorization header) to `/api/jwt/validate` to get new token.
+
+For full API documentation go to `/api/doc`
 
 ## Testing
 
