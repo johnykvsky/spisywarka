@@ -47,3 +47,8 @@ services:
 
     App\Twig\Extension\ActiveMenuExtension:
         arguments: ["@request_stack"]
+
+    App\Service\JWTService:
+        arguments:
+            - '%env(SSO_JWT_PRIVATE_KEY)%'
+            - '%env(SSO_JWT_ALGORITHM)%'

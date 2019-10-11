@@ -129,7 +129,7 @@ class AdminCollectionController extends AbstractController
     }
 
     /** 
-     * @Route("/api/collections/autocomplete", name="admin_collections_autocomplete", methods={"GET"}) 
+     * @Route("/autocomplete/collections", name="admin_collections_autocomplete", methods={"GET"}) 
      *
      * @SWG\Tag(name="Autocomplete")
      * @SWG\Get(

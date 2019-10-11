@@ -132,7 +132,7 @@ class AdminCategoryController extends AbstractController
     }
 
     /** 
-     * @Route("/api/categories/autocomplete", name="admin_categories_autocomplete", methods={"GET"}) 
+     * @Route("/autocomplete/categories", name="admin_categories_autocomplete", methods={"GET"}) 
      *
      * @SWG\Tag(name="Autocomplete")
      * @SWG\Get(

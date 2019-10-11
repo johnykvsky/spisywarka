@@ -38,6 +38,20 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param string $email
+     * @throws UserNotFoundException
+     * @return User
+     */
+    public function getUserByEmail(string $email): User
+    {
+        if ($user = $this->findOneBy(['email' => $email])) {
+            return $user;
+        }
+
+        throw new UserNotFoundException('User not found');
+    }
+
+    /**
      * @param User $user
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

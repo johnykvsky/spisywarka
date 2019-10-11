@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     $('#loan_item').select2({
       ajax: {
-        url: '/api/items/autocomplete',
+        url: '/autocomplete/items',
         dataType: 'json',
         processResults: function (data) {
           return {
@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     $('#item_category').select2({
       ajax: {
-        url: '/api/categories/autocomplete',
+        url: '/autocomplete/categories',
         dataType: 'json',
         processResults: function (data) {
           return {
@@ -29,7 +29,7 @@ $(document).ready(function() {
 
     $('#item_collections').select2({
       ajax: {
-        url: '/api/collections/autocomplete',
+        url: '/autocomplete/collections',
         dataType: 'json',
         processResults: function (data) {
           return {

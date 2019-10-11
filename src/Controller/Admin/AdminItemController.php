@@ -132,7 +132,7 @@ class AdminItemController extends AbstractController
     }
 
     /** 
-     * @Route("/api/items/autocomplete", name="admin_items_autocomplete", methods={"GET"}) 
+     * @Route("/autocomplete/items", name="admin_items_autocomplete", methods={"GET"}) 
      *
      * @SWG\Tag(name="Autocomplete")
      * @SWG\Get(
