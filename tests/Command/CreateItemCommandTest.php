@@ -31,7 +31,7 @@ class CreateItemCommandTest extends TestCase
             );
         $this->assertSame($item->getId()->toString(), $command->getId()->toString());
         $this->assertSame($item->getName(), $command->getName());
-        $this->assertSame($item->getCategory()->getId()->toString(), $command->getCategory()->toString());
+        $this->assertSame($item->getCategory()->getId()->toString(), $command->getCategoryId()->toString());
         $this->assertSame($item->getYear(), $command->getYear());
         $this->assertSame($item->getFormat(), $command->getFormat());
         $this->assertSame($item->getAuthor(), $command->getAuthor());

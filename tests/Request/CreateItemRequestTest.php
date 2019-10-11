@@ -39,7 +39,7 @@ class CreateItemRequestTest extends TestCase
 
         $this->assertCount(0, $errors);
         $this->assertSame($item->getName(), $request->getName());
-        $this->assertSame($item->getCategory()->getId()->toString(), $request->getCategory()->toString());
+        $this->assertSame($item->getCategory()->getId()->toString(), $request->getCategoryId()->toString());
         $this->assertSame($item->getYear(), $request->getYear());
         $this->assertSame($item->getFormat(), $request->getFormat());
         $this->assertSame($item->getAuthor(), $request->getAuthor());

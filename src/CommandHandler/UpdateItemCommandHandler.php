@@ -73,7 +73,7 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
     {
         try {
              $item = $this->repository->getItem($command->getId());
-             $category = $this->categoryRepository->getCategory($command->getCategory());
+             $category = $this->categoryRepository->getCategory($command->getCategoryId());
 
              $item->setName($command->getName());
              $item->setCategory($category);

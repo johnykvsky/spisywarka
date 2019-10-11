@@ -71,7 +71,7 @@ class CreateItemCommandHandler implements CommandHandlerInterface
     public function __invoke(CreateItemCommand $command)
     {
         try {
-            $category = $this->categoryRepository->getCategory($command->getCategory());
+            $category = $this->categoryRepository->getCategory($command->getCategoryId());
             $item = new Item(
                 $command->getId(),
                 $command->getName(),

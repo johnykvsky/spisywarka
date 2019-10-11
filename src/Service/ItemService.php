@@ -41,7 +41,7 @@ class ItemService
             return new CreateItemCommand(
                 Uuid::uuid4(),
                 $itemDTO->getName(),
-                $itemDTO->getCategory(),
+                $itemDTO->getCategoryId(),
                 $itemDTO->getYear(),
                 $itemDTO->getFormat(),
                 $itemDTO->getAuthor(),
@@ -55,7 +55,7 @@ class ItemService
             return new UpdateItemCommand(
                 $itemDTO->getId(),
                 $itemDTO->getName(),
-                $itemDTO->getCategory(),
+                $itemDTO->getCategoryId(),
                 $itemDTO->getYear(),
                 $itemDTO->getFormat(),
                 $itemDTO->getAuthor(),

@@ -395,7 +395,7 @@ class Item implements \JsonSerializable
         return [
             'id' => $this->getId()->toString(),
             'name' => $this->getName(),
-            'category' => $this->getCategory(),
+            'categoryId' => $this->getCategory()->getId()->toString(),
             'year' => $this->getYear(),
             'format' => $this->getFormat(),
             'author' => $this->getAuthor(),

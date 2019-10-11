@@ -77,7 +77,7 @@ class ItemController extends AbstractController
      *          @SWG\Schema(
      *              required={"name"},
      *              @SWG\Property(property="name", type="string", maxLength=255),
-     *              @SWG\Property(property="category", type="string", format="UUID") ,
+     *              @SWG\Property(property="categoryId", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -119,7 +119,7 @@ class ItemController extends AbstractController
             $command = new CreateItemCommand(
                 $id,
                 $request->getName(),
-                $request->getCategory(),
+                $request->getCategoryId(),
                 $request->getYear(),
                 $request->getFormat(),
                 $request->getAuthor(),
@@ -152,7 +152,7 @@ class ItemController extends AbstractController
      *          @SWG\Schema(
      *              @SWG\Property(property="id", type="string", format="UUID") ,
      *              @SWG\Property(property="name", type="string"),
-     *              @SWG\Property(property="category", type="string", format="UUID") ,
+     *              @SWG\Property(property="categoryId", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -210,7 +210,7 @@ class ItemController extends AbstractController
      *              required={"id", "name"},
      *              @SWG\Property(property="id", type="string", format="UUID"),
      *              @SWG\Property(property="name", type="string", maxLength=255),
-     *              @SWG\Property(property="category", type="string", format="UUID") ,
+     *              @SWG\Property(property="categoryId", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -227,7 +227,7 @@ class ItemController extends AbstractController
      *     @SWG\Schema(
      *              @SWG\Property(property="id", type="string", format="UUID"),
      *              @SWG\Property(property="name", type="string", maxLength=255),
-     *              @SWG\Property(property="category", type="string", format="UUID") ,
+     *              @SWG\Property(property="categoryId", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -260,7 +260,7 @@ class ItemController extends AbstractController
             $command = new UpdateItemCommand(
                 $request->getId(),
                 $request->getName(),
-                $request->getCategory(),
+                $request->getCategoryId(),
                 $request->getYear(),
                 $request->getFormat(),
                 $request->getAuthor(),

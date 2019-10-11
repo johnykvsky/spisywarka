@@ -107,7 +107,7 @@ final class ItemType extends AbstractType  implements DataMapperInterface
         if (!empty($itemDTO)) {
             $forms = iterator_to_array($forms);
             $forms['name']->setData($itemDTO->getName());
-            $forms['category']->setData($itemDTO->getCategory());
+            $forms['category']->setData($itemDTO->getCategoryId());
             $forms['description']->setData($itemDTO->getDescription());
             $forms['year']->setData($itemDTO->getYear());
             $forms['format']->setData($itemDTO->getFormat());

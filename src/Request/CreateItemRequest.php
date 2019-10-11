@@ -22,7 +22,7 @@ class CreateItemRequest
      * @Assert\NotBlank()
      * @Assert\Uuid()
      */
-    private $category;
+    private $categoryId;
     /**
      * @var int
      * @Type("int")
@@ -69,7 +69,7 @@ class CreateItemRequest
     /**
      * CreateItemRequest constructor.
      * @param string $name
-     * @param string $category
+     * @param string $categoryId
      * @param int $year
      * @param string $format
      * @param string $author
@@ -79,7 +79,7 @@ class CreateItemRequest
      * @param string $url
      */
     public function __construct(string $name,
-                                string $category,
+                                string $categoryId,
                                 int $year,
                                 string $format,
                                 string $author,
@@ -89,7 +89,7 @@ class CreateItemRequest
                                 string $url)
     {
         $this->name = $name;
-        $this->category = $category;
+        $this->categoryId = $categoryId;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -110,9 +110,9 @@ class CreateItemRequest
     /**
      * @return UuidInterface
      */
-    public function getCategory(): UuidInterface
+    public function getCategoryId(): UuidInterface
     {
-        return Uuid::fromString($this->category);
+        return Uuid::fromString($this->categoryId);
     }
 
     /**

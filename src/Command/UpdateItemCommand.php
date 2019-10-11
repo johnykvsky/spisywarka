@@ -17,7 +17,7 @@ class UpdateItemCommand implements CommandInterface
     /**
      * @var UuidInterface
      */
-    private $category;
+    private $categoryId;
     /**
      * @var ?int
      */
@@ -54,7 +54,7 @@ class UpdateItemCommand implements CommandInterface
     /**
      * @param UuidInterface $id
      * @param string $name
-     * @param UuidInterface $category
+     * @param UuidInterface $categoryId
      * @param ?int $year
      * @param ?string $format
      * @param ?string $author
@@ -66,7 +66,7 @@ class UpdateItemCommand implements CommandInterface
      */
     public function __construct(UuidInterface $id,
                                 string $name,
-                                UuidInterface $category,
+                                UuidInterface $categoryId,
                                 ?int $year,
                                 ?string $format,
                                 ?string $author,
@@ -78,7 +78,7 @@ class UpdateItemCommand implements CommandInterface
     {
         $this->id = $id;
         $this->name = $name;
-        $this->category = $category;
+        $this->categoryId = $categoryId;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -100,9 +100,9 @@ class UpdateItemCommand implements CommandInterface
     /**
      * @return UuidInterface
      */
-    public function getCategory(): UuidInterface
+    public function getCategoryId(): UuidInterface
     {
-        return $this->category;
+        return $this->categoryId;
     }
 
     /**

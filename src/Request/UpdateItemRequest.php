@@ -29,7 +29,7 @@ class UpdateItemRequest
      * @Assert\NotBlank()
      * @Assert\Uuid()
      */
-    private $category;
+    private $categoryId;
     /**
      * @var int
      * @Type("int")
@@ -77,7 +77,7 @@ class UpdateItemRequest
      * UpdateItemRequest constructor.
      * @param string $id
      * @param string $name
-     * @param string $category
+     * @param string $categoryId
      * @param int $year
      * @param string $format
      * @param string $author
@@ -88,7 +88,7 @@ class UpdateItemRequest
      */
     public function __construct(string $id,
                                 string $name,
-                                string $category,
+                                string $categoryId,
                                 int $year,
                                 string $format,
                                 string $author,
@@ -100,7 +100,7 @@ class UpdateItemRequest
 
         $this->id = $id;
         $this->name = $name;
-        $this->category = $category;
+        $this->categoryId = $categoryId;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -129,9 +129,9 @@ class UpdateItemRequest
     /**
      * @return UuidInterface
      */
-    public function getCategory(): UuidInterface
+    public function getCategoryId(): UuidInterface
     {
-        return Uuid::fromString($this->category);
+        return Uuid::fromString($this->categoryId);
     }
 
     /**

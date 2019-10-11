@@ -25,7 +25,7 @@ class ItemDTO {
      * @Type("string")
      * @Assert\Uuid()
      */
-    private $category;
+    private $categoryId;
     /**
      * @var int|null
      * @Type("int")
@@ -78,7 +78,7 @@ class ItemDTO {
      * ItemDTO constructor.
      * @param string|null $id
      * @param string $name
-     * @param string $category
+     * @param string $categoryId
      * @param int|null $year
      * @param string|null $format
      * @param string|null $author
@@ -90,7 +90,7 @@ class ItemDTO {
      */
     public function __construct(?string $id,
                                 string $name,
-                                string $category,
+                                string $categoryId,
                                 ?int $year,
                                 ?string $format,
                                 ?string $author,
@@ -103,7 +103,7 @@ class ItemDTO {
 
         $this->id = $id;
         $this->name = $name;
-        $this->category = $category;
+        $this->categoryId = $categoryId;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -137,17 +137,17 @@ class ItemDTO {
     /**
      * @return UuidInterface
      */
-    public function getCategory(): UuidInterface
+    public function getCategoryId(): UuidInterface
     {
-        return Uuid::fromString($this->category);
+        return Uuid::fromString($this->categoryId);
     }
 
     /**
-     * @param string $category
+     * @param string $categoryId
     */
-    public function setCategory(string $category): void
+    public function setCategoryId(string $categoryId): void
     {
-        $this->category = $category;
+        $this->categoryId = $categoryId;
     }
 
     /**
