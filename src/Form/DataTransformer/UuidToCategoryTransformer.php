@@ -8,7 +8,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
-use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
 
 class UuidToCategoryTransformer implements DataTransformerInterface
@@ -54,10 +53,6 @@ class UuidToCategoryTransformer implements DataTransformerInterface
             throw new TransformationFailedException(sprintf('Category "%s" not found !', $categoryId));
         } catch (InvalidUuidStringException $e) {
             throw new TransformationFailedException(sprintf('Invalid UUID "%s" !', $categoryId));
-        }
-
-        if (null === $category) {
-            throw new TransformationFailedException(sprintf('Category with id "%s" does not exist!', $categoryId));
         }
 
         return $category;

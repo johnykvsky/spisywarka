@@ -135,21 +135,17 @@ class ItemDTO {
     }
 
     /**
-     * @return ?UuidInterface
+     * @return UuidInterface
      */
-    public function getCategory(): ?UuidInterface
+    public function getCategory(): UuidInterface
     {
-        if (!empty($this->category)) {
-            return Uuid::fromString($this->category);
-        }
-
-        return null;
+        return Uuid::fromString($this->category);
     }
 
     /**
-     * @param string|null $category
+     * @param string $category
     */
-    public function setCategory(?string $category): void
+    public function setCategory(string $category): void
     {
         $this->category = $category;
     }

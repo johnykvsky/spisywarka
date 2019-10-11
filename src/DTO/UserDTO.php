@@ -1,7 +1,6 @@
 <?php
 namespace App\DTO;
 
-use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation\Type;

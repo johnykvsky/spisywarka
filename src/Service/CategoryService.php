@@ -11,6 +11,7 @@ use Ramsey\Uuid\Uuid;
 class CategoryService
 {
     /**
+     * @param Category $category
      * @return CategoryDTO
      */
     public function fillCategoryDTO(Category $category): CategoryDTO
@@ -23,6 +24,7 @@ class CategoryService
     }
 
     /**
+     * @param CategoryDTO $categoryDTO
      * @return CreateCategoryCommand|UpdateCategoryCommand
      */
     public function getCommand(CategoryDTO $categoryDTO):  CommandInterface

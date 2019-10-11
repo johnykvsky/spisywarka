@@ -10,7 +10,6 @@ use App\Repository\Exception\CategoryNotFoundException;
 use App\Repository\CategoryRepository;
 use App\Request\CreateCategoryRequest;
 use App\Request\UpdateCategoryRequest;
-//use App\Request\DeleteCategoryRequest;
 use App\Traits\JsonErrorResponse;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
@@ -22,9 +21,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Swagger\Annotations as SWG;
-//use App\CommandHandler\Exception\CategoryNotCreatedException;
 use App\CommandHandler\Exception\CategoryNotDeletedException;
-//use App\CommandHandler\Exception\CategoryNotUpdatedException;
 
 class CategoryController extends AbstractController
 {

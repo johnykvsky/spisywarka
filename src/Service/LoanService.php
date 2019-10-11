@@ -12,6 +12,7 @@ use Ramsey\Uuid\UuidInterface;
 class LoanService
 {
     /**
+     * @param Loan $loan
      * @return LoanDTO
      */
     public function fillLoanDTO(Loan $loan): LoanDTO
@@ -25,12 +26,17 @@ class LoanService
         );
     }
 
-    public function getLoanDTOForItem(UuidInterface $itemId)
+    /**
+     * @param UuidInterface $itemId
+     * @return LoanDTO
+     */
+    public function getLoanDTOForItem(UuidInterface $itemId): LoanDTO
     {
         return new LoanDTO(null, $itemId->toString(), null, null, null);
     }
 
     /**
+     * @param LoanDTO $loanDTO
      * @return CreateLoanCommand|UpdateLoanCommand
      */
     public function getCommand(LoanDTO $loanDTO):  CommandInterface

@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller\Security;
 
-use App\Entity\User;
 use App\DTO\UserRegistrationDTO;
 use App\Form\Type\UserRegistrationType;
 use App\Repository\UserRepository;

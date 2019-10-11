@@ -11,6 +11,7 @@ use Ramsey\Uuid\Uuid;
 class ItemService
 {
     /**
+     * @param Item $item
      * @return ItemDTO
      */
     public function fillItemDTO(Item $item): ItemDTO
@@ -31,6 +32,7 @@ class ItemService
     }
 
     /**
+     * @param ItemDTO $itemDTO
      * @return CreateItemCommand|UpdateItemCommand
      */
     public function getCommand(ItemDTO $itemDTO):  CommandInterface

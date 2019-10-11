@@ -21,9 +21,9 @@ class UserProfileType extends AbstractType  implements DataMapperInterface
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('firstName', TextType::class, ['required' => true])
+            ->add('lastName', TextType::class, ['required' => true])
+            ->add('email', EmailType::class, ['required' => true])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
@@ -59,11 +59,13 @@ class UserProfileType extends AbstractType  implements DataMapperInterface
      */
     public function mapDataToForms($userDTO, $forms): void
     {
-        $forms = iterator_to_array($forms);
-        $forms['firstName']->setData($userDTO->getFirstName());
-        $forms['lastName']->setData($userDTO->getLastName());
-        $forms['email']->setData($userDTO->getEmail());
-        $forms['plainPassword']->setData($userDTO->getPlainPassword());
+        if (!empty($userDTO)) {
+            $forms = iterator_to_array($forms);
+            $forms['firstName']->setData($userDTO->getFirstName());
+            $forms['lastName']->setData($userDTO->getLastName());
+            $forms['email']->setData($userDTO->getEmail());
+            $forms['plainPassword']->setData($userDTO->getPlainPassword());
+        }
     }
 
     /**

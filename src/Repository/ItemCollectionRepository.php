@@ -10,8 +10,6 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use App\Repository\Exception\ItemCollectionNotFoundException;
-use Doctrine\ORM\Query;
-use Ramsey\Uuid\UuidInterface;
 
 /**
  * @method ItemCollection|null find($id, $lockMode = null, $lockVersion = null)

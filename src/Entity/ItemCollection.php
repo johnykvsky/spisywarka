@@ -4,14 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Assert\Assertion;
 use Assert\AssertionFailedException;
-use App\Traits\HasTimestamps;
-use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
-//use App\Entity\Item;
-//use App\Entity\Collection;
-use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Table(name="item_collections")

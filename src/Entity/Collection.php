@@ -11,7 +11,6 @@ use Doctrine\ORM\PersistentCollection;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 use Swagger\Annotations as SWG;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="collection")

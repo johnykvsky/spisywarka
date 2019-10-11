@@ -10,7 +10,6 @@ use App\Repository\Exception\LoanNotFoundException;
 use App\Repository\LoanRepository;
 use App\Request\CreateLoanRequest;
 use App\Request\UpdateLoanRequest;
-//use App\Request\DeleteCategoryRequest;
 use App\Traits\JsonErrorResponse;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
@@ -23,9 +22,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Swagger\Annotations as SWG;
-//use App\CommandHandler\Exception\CategoryNotCreatedException;
 use App\CommandHandler\Exception\LoanNotDeletedException;
-//use App\CommandHandler\Exception\CategoryNotUpdatedException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 
 class LoanController extends AbstractController

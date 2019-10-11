@@ -11,6 +11,7 @@ use Ramsey\Uuid\Uuid;
 class CollectionService
 {
     /**
+     * @param Collection $collection
      * @return CollectionDTO
      */
     public function fillCollectionDTO(Collection $collection): CollectionDTO
@@ -23,6 +24,7 @@ class CollectionService
     }
 
     /**
+     * @param CollectionDTO $collectionDTO
      * @return CreateCollectionCommand|UpdateCollectionCommand
      */
     public function getCommand(CollectionDTO $collectionDTO):  CommandInterface

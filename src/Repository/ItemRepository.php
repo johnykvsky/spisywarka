@@ -110,9 +110,10 @@ class ItemRepository extends ServiceEntityRepository
     }
     
     /**
+     * @param UuidInterface $categoryId
      * @return array
      */
-    public function getItemsInCategory($categoryId): array
+    public function getItemsInCategory(UuidInterface $categoryId): array
     {
         return $this->createQueryBuilder('i')
         ->where('i.category = :categoryId')
@@ -125,9 +126,10 @@ class ItemRepository extends ServiceEntityRepository
     }
     
     /**
+     * @param UuidInterface $collectionId
      * @return array
      */
-    public function getItemsInCollection($collectionId): array
+    public function getItemsInCollection(UuidInterface $collectionId): array
     {
         return $this->createQueryBuilder('i')
         ->innerJoin('i.collections', 'c')

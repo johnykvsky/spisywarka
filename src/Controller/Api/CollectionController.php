@@ -9,7 +9,6 @@ use App\Error\ApiError;
 use App\Repository\Exception\CollectionNotFoundException;
 use App\Repository\CollectionRepository;
 use App\Request\CreateCollectionRequest;
-//use App\Request\DeleteCollectionRequest;
 use App\Request\UpdateCollectionRequest;
 use App\Traits\JsonErrorResponse;
 use Psr\Log\LoggerInterface;
@@ -22,9 +21,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Swagger\Annotations as SWG;
-//use App\CommandHandler\Exception\CollectionNotCreatedException;
 use App\CommandHandler\Exception\CollectionNotDeletedException;
-//use App\CommandHandler\Exception\CollectionNotUpdatedException;
 
 class CollectionController extends AbstractController
 {

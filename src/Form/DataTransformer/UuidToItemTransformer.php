@@ -55,10 +55,6 @@ class UuidToItemTransformer implements DataTransformerInterface
             throw new TransformationFailedException(sprintf('Invalid UUID "%s" !', $itemId));
         }
 
-        if (null === $item) {
-            throw new TransformationFailedException(sprintf('An item with id "%s" does not exist!', $itemId));
-        }
-
         return $item;
     }
 }

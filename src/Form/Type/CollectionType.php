@@ -20,7 +20,7 @@ final class CollectionType extends AbstractType  implements DataMapperInterface
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, ['required' => true])
             ->add('description', TextareaType::class, ['required' => false])
             ->add('submit', SubmitType::class)
             ->setDataMapper($this);
@@ -45,13 +45,11 @@ final class CollectionType extends AbstractType  implements DataMapperInterface
      */
     public function mapDataToForms($collectionDTO, $forms): void
     {
-        if (empty($collectionDTO)) {
-            $collectionDTO = new CollectionDTO(null, '', null);
+        if (!empty($collectionDTO)) {
+            $forms = iterator_to_array($forms);
+            $forms['name']->setData($collectionDTO->getName());
+            $forms['description']->setData($collectionDTO->getDescription());
         }
-
-        $forms = iterator_to_array($forms);
-        $forms['name']->setData($collectionDTO->getName());
-        $forms['description']->setData($collectionDTO->getDescription());
     }
 
     /**

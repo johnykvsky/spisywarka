@@ -31,6 +31,7 @@ final class LoanType extends AbstractType  implements DataMapperInterface
         $builder
             ->add('item', Select2EntityType::class, [
                 'multiple' => false,
+                'required' => true,
                 'remote_route' => 'admin_items_autocomplete',
                 'remote_params' => [], // static route parameters for request->query
                 'class' => '\App\Entity\Item',

@@ -8,9 +8,6 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Swagger\Annotations as SWG;
 use App\Traits\HasTimestamps;
-use Assert\Assertion;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LoanRepository")

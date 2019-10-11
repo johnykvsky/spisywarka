@@ -37,8 +37,9 @@ final class ItemType extends AbstractType  implements DataMapperInterface
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, ['required' => true])
             ->add('category', Select2EntityType::class, [
+                'required' => true,
                 'multiple' => false,
                 'remote_route' => 'admin_categories_autocomplete',
                 'remote_params' => [], // static route parameters for request->query
@@ -103,21 +104,19 @@ final class ItemType extends AbstractType  implements DataMapperInterface
      */
     public function mapDataToForms($itemDTO, $forms): void
     {
-        if (null == $itemDTO) {
-            $itemDTO = new ItemDTO(null, '', '', null, null, null, null, null, null, null, []);
+        if (!empty($itemDTO)) {
+            $forms = iterator_to_array($forms);
+            $forms['name']->setData($itemDTO->getName());
+            $forms['category']->setData($itemDTO->getCategory());
+            $forms['description']->setData($itemDTO->getDescription());
+            $forms['year']->setData($itemDTO->getYear());
+            $forms['format']->setData($itemDTO->getFormat());
+            $forms['author']->setData($itemDTO->getAuthor());
+            $forms['publisher']->setData($itemDTO->getPublisher());
+            $forms['store']->setData($itemDTO->getStore());
+            $forms['url']->setData($itemDTO->getUrl());
+            $forms['collections']->setData($itemDTO->getCollections());
         }
-
-        $forms = iterator_to_array($forms);
-        $forms['name']->setData($itemDTO->getName());
-        $forms['category']->setData($itemDTO->getCategory());
-        $forms['description']->setData($itemDTO->getDescription());
-        $forms['year']->setData($itemDTO->getYear());
-        $forms['format']->setData($itemDTO->getFormat());
-        $forms['author']->setData($itemDTO->getAuthor());
-        $forms['publisher']->setData($itemDTO->getPublisher());
-        $forms['store']->setData($itemDTO->getStore());
-        $forms['url']->setData($itemDTO->getUrl());
-        $forms['collections']->setData($itemDTO->getCollections());
     }
 
     /**

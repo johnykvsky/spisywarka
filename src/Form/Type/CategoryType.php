@@ -20,7 +20,7 @@ final class CategoryType extends AbstractType  implements DataMapperInterface
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, ['required' => true])
             ->add('description', TextareaType::class, ['required' => false])
             ->add('submit', SubmitType::class)
             ->setDataMapper($this);
@@ -45,13 +45,11 @@ final class CategoryType extends AbstractType  implements DataMapperInterface
      */
     public function mapDataToForms($categoryDTO, $forms): void
     {
-        if (empty($categoryDTO)) {
-            $categoryDTO = new CategoryDTO(null, '', null);
+        if (!empty($categoryDTO)) {
+            $forms = iterator_to_array($forms);
+            $forms['name']->setData($categoryDTO->getName());
+            $forms['description']->setData($categoryDTO->getDescription());
         }
-
-        $forms = iterator_to_array($forms);
-        $forms['name']->setData($categoryDTO->getName());
-        $forms['description']->setData($categoryDTO->getDescription());
     }
 
     /**

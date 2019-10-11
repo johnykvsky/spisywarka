@@ -7,16 +7,12 @@ use App\Repository\CollectionRepository;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormError;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Form\FormInterface;
-use Swagger\Annotations as SWG;
 use App\Command\RemoveItemFromCollectionCommand;
 
 class AdminCollectionItemsController extends AbstractController

@@ -72,9 +72,10 @@ class AdminCategoryController extends AbstractController
         $form = $this->getForm($id);
         $form->handleRequest($rawRequest);
 
-        $category = $this->repository->getCategory(Uuid::fromString($id));
-
         try {
+            if (!empty($id)) {
+                $this->repository->getCategory(Uuid::fromString($id));
+            }
             if ($form->isSubmitted() && $form->isValid()) {
                 $categoryDTO = $form->getData();
                 $categoryDTO->setId($id);
