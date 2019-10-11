@@ -18,6 +18,7 @@ class ItemService
         return new ItemDTO(
             $item->getId()->toString(),
             $item->getName(),
+            $item->getCategory()->getId()->toString(),
             $item->getYear(),
             $item->getFormat(),
             $item->getAuthor(),
@@ -25,7 +26,6 @@ class ItemService
             $item->getDescription(),
             $item->getStore(),
             $item->getUrl(),
-            $item->getCategories()->toArray(),
             $item->getCollections()->toArray()
         );
     }
@@ -39,6 +39,7 @@ class ItemService
             return new CreateItemCommand(
                 Uuid::uuid4(),
                 $itemDTO->getName(),
+                $itemDTO->getCategory(),
                 $itemDTO->getYear(),
                 $itemDTO->getFormat(),
                 $itemDTO->getAuthor(),
@@ -46,13 +47,13 @@ class ItemService
                 $itemDTO->getDescription(),
                 $itemDTO->getStore(),
                 $itemDTO->getUrl(),
-                $itemDTO->getCategories(),
                 $itemDTO->getCollections()
             );
         } else {
             return new UpdateItemCommand(
                 $itemDTO->getId(),
                 $itemDTO->getName(),
+                $itemDTO->getCategory(),
                 $itemDTO->getYear(),
                 $itemDTO->getFormat(),
                 $itemDTO->getAuthor(),
@@ -60,7 +61,6 @@ class ItemService
                 $itemDTO->getDescription(),
                 $itemDTO->getStore(),
                 $itemDTO->getUrl(),
-                $itemDTO->getCategories(),
                 $itemDTO->getCollections()
             );
         }

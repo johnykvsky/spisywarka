@@ -3,20 +3,20 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\Item;
 use App\Repository\Exception\ItemNotFoundException;
+use App\Repository\ItemRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
-use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
 
 class UuidToItemTransformer implements DataTransformerInterface
 {
-    private $entityManager;
+    private $itemRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ItemRepository $itemRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->itemRepository = $itemRepository;
     }
 
     /**
@@ -48,7 +48,7 @@ class UuidToItemTransformer implements DataTransformerInterface
         }
 
         try {
-            $item = $this->entityManager->getRepository(Item::class)->find(Uuid::fromString($itemId));
+            $item = $this->itemRepository->getItem(Uuid::fromString($itemId));
         } catch (ItemNotFoundException $e) {
             throw new TransformationFailedException(sprintf('Item "%s" not found !', $itemId));
         } catch (InvalidUuidStringException $e) {

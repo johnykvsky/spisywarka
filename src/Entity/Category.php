@@ -11,6 +11,7 @@ use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 use Swagger\Annotations as SWG;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
@@ -52,9 +53,9 @@ class Category implements \JsonSerializable
      * @ORM\Column(length=128, unique=true)
      */
     private $slug;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ItemCategory", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="category")
      */
     protected $items;
     
@@ -134,7 +135,7 @@ class Category implements \JsonSerializable
         return $this;
     }
     
-    public function getItems(): ?PersistentCollection
+    public function getItems(): ?Collection
     {
         return $this->items;
     }

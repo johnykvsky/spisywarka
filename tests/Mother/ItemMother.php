@@ -15,10 +15,12 @@ final class ItemMother
      */
     public static function random(): Item
     {
+        $category = CategoryMother::random();
         $faker = Factory::create('en_GB');
         return new Item(
             Uuid::uuid4(),
             $faker->title(),
+            $category,
             (int) $faker->year(),
             $faker->title(255),
             $faker->name(),

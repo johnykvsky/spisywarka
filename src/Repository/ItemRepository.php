@@ -66,6 +66,14 @@ class ItemRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return array
+     */
+    public function listAllItemsForApi(): array
+    {
+        return $this->findAll();
+    }
+
+    /**
      * @param string|null $searchQuery
      * @return Query
      */
@@ -107,8 +115,7 @@ class ItemRepository extends ServiceEntityRepository
     public function getItemsInCategory($categoryId): array
     {
         return $this->createQueryBuilder('i')
-        ->innerJoin('i.categories', 'c')
-        ->where('c.category = :categoryId')
+        ->where('i.category = :categoryId')
         ->orderBy('i.name' ,'ASC')
         ->setParameters([
             'categoryId' => $categoryId,

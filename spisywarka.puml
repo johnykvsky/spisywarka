@@ -1,0 +1,54 @@
+@startuml
+title Spisywarka
+hide empty methods
+hide empty members
+class Item {
+  - id : Uuid
+  - name : string
+  - category : Category
+  - year : ?integer
+  - format : ?string
+  - author : ?string
+  - publisher : ?string
+  - description : ?string
+  - store : ?string
+  - url : ?string
+  - slug : string
+  + Loan[] getLoaned()
+  + ItemCollection[] getCollections()
+  + Collection[] getItemCollections()
+  + void addCollection(ItemCollection)
+  + bool isInCollection(Collection)
+}
+
+class Collection {
+  - id : Uuid
+  - name : string
+  - description : string
+}
+
+class Category {
+  - id : Uuid
+  - name : string
+  - description : string
+}
+
+class ItemCollection {
+  - item : Item
+  - collection : Collection
+}
+
+class Loan {
+  - id : Uuid
+  - item : Item
+  - loaner : ?string
+  - loanDate : ?DateTime
+  - returnDate : ?DateTime
+}
+
+Item "1" -- "*" Loan
+Item "1" -- "1" Category
+Item "1" - "*" ItemCollection
+ItemCollection "1" -- "1" Collection
+
+@enduml

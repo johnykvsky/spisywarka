@@ -83,6 +83,7 @@ class ItemController extends AbstractController
      *          @SWG\Schema(
      *              required={"name"},
      *              @SWG\Property(property="name", type="string", maxLength=255),
+     *              @SWG\Property(property="category", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -124,6 +125,7 @@ class ItemController extends AbstractController
             $command = new CreateItemCommand(
                 $id,
                 $request->getName(),
+                $request->getCategory(),
                 $request->getYear(),
                 $request->getFormat(),
                 $request->getAuthor(),
@@ -131,7 +133,6 @@ class ItemController extends AbstractController
                 $request->getDescription(),
                 $request->getStore(),
                 $request->getUrl(),
-                null,
                 null
             );
             $this->commandBus->dispatch($command);
@@ -157,6 +158,7 @@ class ItemController extends AbstractController
      *          @SWG\Schema(
      *              @SWG\Property(property="id", type="string", format="UUID") ,
      *              @SWG\Property(property="name", type="string"),
+     *              @SWG\Property(property="category", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -214,6 +216,7 @@ class ItemController extends AbstractController
      *              required={"id", "name"},
      *              @SWG\Property(property="id", type="string", format="UUID"),
      *              @SWG\Property(property="name", type="string", maxLength=255),
+     *              @SWG\Property(property="category", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -230,6 +233,7 @@ class ItemController extends AbstractController
      *     @SWG\Schema(
      *              @SWG\Property(property="id", type="string", format="UUID"),
      *              @SWG\Property(property="name", type="string", maxLength=255),
+     *              @SWG\Property(property="category", type="string", format="UUID") ,
      *              @SWG\Property(property="year", type="integer"),
      *              @SWG\Property(property="format", type="string"),
      *              @SWG\Property(property="author", type="string"),
@@ -262,6 +266,7 @@ class ItemController extends AbstractController
             $command = new UpdateItemCommand(
                 $request->getId(),
                 $request->getName(),
+                $request->getCategory(),
                 $request->getYear(),
                 $request->getFormat(),
                 $request->getAuthor(),
@@ -269,7 +274,6 @@ class ItemController extends AbstractController
                 $request->getDescription(),
                 $request->getStore(),
                 $request->getUrl(),
-                null,
                 null
                 );
             $this->commandBus->dispatch($command);
@@ -330,130 +334,6 @@ class ItemController extends AbstractController
                 );
         }
     }    
-    
-    /**
-     * @Route("/api/item/category", name="add_item_to_category", methods={"POST"})
-     *
-     * @SWG\Tag(name="Items")
-     * @SWG\Post(
-     *     @SWG\Parameter(
-     *          name="body",
-     *          in="body",
-     *          required=true,
-     *          format="application/json",
-     *          @SWG\Schema(
-     *              required={"name"},
-     *              @SWG\Property(property="itemId", type="string", format="UUID"),
-     *              @SWG\Property(property="categoryId", type="string", format="UUID"),
-     *          )
-     *     )
-     * )
-     * @SWG\Response(
-     *     response=201,
-     *     description="Item added to category"
-     * )
-     * @SWG\Response(
-     *     response=422,
-     *     description="Item was not added to category"
-     * )
-     * @SWG\Response(
-     *     response=404,
-     *     description="Item or Category nor found"
-     * )
-     *
-     * @ParamConverter("request", converter="fos_rest.request_body")
-     * 
-     * @param AddItemToCategoryRequest $request
-     * @param ConstraintViolationListInterface $validationErrors
-     * @return JsonResponse
-     */
-    public function addItemToCategory(AddItemToCategoryRequest $request, ConstraintViolationListInterface $validationErrors): JsonResponse
-    {
-        if ($validationErrors->count()) {
-            return  $this->jsonError(ApiError::ENTITY_VALIDATION_ERROR,
-                'Validations errors for create Item',
-                Response::HTTP_BAD_REQUEST,
-                $this->parseFormErrors($validationErrors)
-                );
-        }
-        
-        try {
-            $command = new AddItemToCategoryCommand(
-                $request->getItemId(),
-                $request->getCategoryId()
-                );
-            $this->commandBus->dispatch($command);
-            return $this->json(null, Response::HTTP_CREATED);
-        } catch (\Exception $e) {
-            $this->logger->critical($e->getMessage());
-            return $this->jsonError(ApiError::ENTITY_CREATE_ERROR,
-                $e->getMessage(),
-                Response::HTTP_UNPROCESSABLE_ENTITY
-                );
-        }
-    }
-    
-    /**
-     * @Route("/api/item/category", name="remove_item_from_category", methods={"DELETE"})
-     *
-     * @SWG\Tag(name="Items")
-     * @SWG\Delete(
-     *     @SWG\Parameter(
-     *          name="body",
-     *          in="body",
-     *          required=true,
-     *          format="application/json",
-     *          @SWG\Schema(
-     *              required={"name"},
-     *              @SWG\Property(property="itemId", type="string", maxLength=255),
-     *              @SWG\Property(property="categoryId", type="string", maxLength=255),
-     *          )
-     *     )
-     * )
-     * @SWG\Response(
-     *     response=204,
-     *     description="Item removed from category"
-     * )
-     * @SWG\Response(
-     *     response=422,
-     *     description="Item was not delete from category"
-     * )
-     * @SWG\Response(
-     *     response=404,
-     *     description="Item or Category not found"
-     * )
-     *
-     * @ParamConverter("request", converter="fos_rest.request_body")
-     *
-     * @param RemoveItemFromCategoryRequest $request
-     * @param ConstraintViolationListInterface $validationErrors
-     * @return JsonResponse
-     */
-    public function removeItemFromCategory(RemoveItemFromCategoryRequest $request, ConstraintViolationListInterface $validationErrors): JsonResponse
-    {
-        if ($validationErrors->count()) {
-            return  $this->jsonError(ApiError::ENTITY_VALIDATION_ERROR,
-                'Validations errors for create Item',
-                Response::HTTP_BAD_REQUEST,
-                $this->parseFormErrors($validationErrors)
-                );
-        }
-        
-        try {
-            $command = new RemoveItemFromCategoryCommand(
-                $request->getItemId(),
-                $request->getCategoryId()
-                );
-            $this->commandBus->dispatch($command);
-            return $this->json(null, Response::HTTP_NO_CONTENT);
-        } catch (\Exception $e) {
-            $this->logger->critical($e->getMessage());
-            return $this->jsonError(ApiError::ENTITY_CREATE_ERROR,
-                $e->getMessage(),
-                Response::HTTP_UNPROCESSABLE_ENTITY
-                );
-        }
-    }
 
     /**
      * @Route("/api/item/collection", name="add_item_to_collection", methods={"POST"})
@@ -598,7 +478,7 @@ class ItemController extends AbstractController
      */
     public function getItemsList(Request $request): JsonResponse
     {
-        return $this->json($this->repository->listAllItems());
+        return $this->json($this->repository->listAllItemsForApi());
     }
     
     /**

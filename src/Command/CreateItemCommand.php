@@ -15,6 +15,10 @@ class CreateItemCommand implements CommandInterface
      */
     private $name;
     /**
+     * @var UuidInterface
+     */
+    private $category;
+    /**
      * @var ?int
      */
     private $year;
@@ -45,14 +49,12 @@ class CreateItemCommand implements CommandInterface
     /**
      * @var ?array
      */
-    private $categories;
-    /**
-     * @var ?array
-     */
     private $collections;
 
     /**
      * @param UuidInterface $id
+     * @param string $name
+     * @param UuidInterface $category
      * @param ?int $year
      * @param ?string $format
      * @param ?string $author
@@ -60,11 +62,11 @@ class CreateItemCommand implements CommandInterface
      * @param ?string $description
      * @param ?string $store
      * @param ?string $url
-     * @param ?array $categories
      * @param ?array $collections
      */
     public function __construct(UuidInterface $id,
                                 string $name,
+                                UuidInterface $category,
                                 ?int $year,
                                 ?string $format,
                                 ?string $author,
@@ -72,11 +74,11 @@ class CreateItemCommand implements CommandInterface
                                 ?string $description,
                                 ?string $store,
                                 ?string $url,
-                                ?array $categories,
                                 ?array $collections)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->category = $category;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -84,7 +86,6 @@ class CreateItemCommand implements CommandInterface
         $this->description = $description;
         $this->store = $store;
         $this->url = $url;
-        $this->categories = $categories;
         $this->collections = $collections;
     }
 
@@ -102,6 +103,14 @@ class CreateItemCommand implements CommandInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return UuidInterface
+     */
+    public function getCategory(): UuidInterface
+    {
+        return $this->category;
     }
 
     /**
@@ -158,14 +167,6 @@ class CreateItemCommand implements CommandInterface
     public function getUrl(): ?string
     {
         return $this->url;
-    }
-
-    /**
-     * @return ?array
-     */
-    public function getCategories(): ?array
-    {
-        return $this->categories;
     }
 
     /**

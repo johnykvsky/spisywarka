@@ -78,7 +78,6 @@ final class LoanType extends AbstractType  implements DataMapperInterface
         $forms['loaner']->setData($loanDTO->getLoaner());
         $forms['loanDate']->setData($loanDTO->getLoanDate());
         $forms['returnDate']->setData($loanDTO->getReturnDate());
-
     }
 
     /**

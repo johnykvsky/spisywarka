@@ -14,6 +14,9 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api
+            security: false
         main:
             pattern: ^/
             form_login:

@@ -21,23 +21,33 @@ class UpdateItemRequestTest extends TestCase
      */
     public function test_construct(): void
     {
-        $item = ItemMother::random()->jsonSerialize();
-        $request = new UpdateItemRequest($item['id'], $item['name'], (int) $item['year'], $item['format'], $item['author'],
-            $item['publisher'], $item['description'], $item['store'], $item['url']
+        $item = ItemMother::random();
+        $request = new UpdateItemRequest(
+            $item->getId()->toString(),
+            $item->getName(),
+            $item->getCategory()->getId()->toString(),
+            $item->getYear(), 
+            $item->getFormat(), 
+            $item->getAuthor(), 
+            $item->getPublisher(), 
+            $item->getDescription(), 
+            $item->getStore(), 
+            $item->getUrl()
             );
 
         $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
         $errors = $validator->validate($request);
 
         $this->assertCount(0, $errors);
-        $this->assertSame($item['id'], $request->getId()->toString());
-        $this->assertSame($item['name'], $request->getName());
-        $this->assertSame($item['year'], $request->getYear());
-        $this->assertSame($item['format'], $request->getFormat());
-        $this->assertSame($item['author'], $request->getAuthor());
-        $this->assertSame($item['publisher'], $request->getPublisher());
-        $this->assertSame($item['description'], $request->getDescription());
-        $this->assertSame($item['store'], $request->getStore());
-        $this->assertSame($item['url'], $request->getUrl());
+        $this->assertSame($item->getId()->toString(), $request->getId()->toString());
+        $this->assertSame($item->getName(), $request->getName());
+        $this->assertSame($item->getCategory()->getId()->toString(), $request->getCategory()->toString());
+        $this->assertSame($item->getYear(), $request->getYear());
+        $this->assertSame($item->getFormat(), $request->getFormat());
+        $this->assertSame($item->getAuthor(), $request->getAuthor());
+        $this->assertSame($item->getPublisher(), $request->getPublisher());
+        $this->assertSame($item->getDescription(), $request->getDescription());
+        $this->assertSame($item->getStore(), $request->getStore());
+        $this->assertSame($item->getUrl(), $request->getUrl());
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Request;
 
 use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation\Type;
 
@@ -15,6 +16,13 @@ class CreateItemRequest
      * @Assert\Length(max=255)
      */
     private $name;
+    /**
+     * @var string
+     * @Type("string")
+     * @Assert\NotBlank()
+     * @Assert\Uuid()
+     */
+    private $category;
     /**
      * @var int
      * @Type("int")
@@ -61,6 +69,7 @@ class CreateItemRequest
     /**
      * CreateItemRequest constructor.
      * @param string $name
+     * @param string $category
      * @param int $year
      * @param string $format
      * @param string $author
@@ -70,6 +79,7 @@ class CreateItemRequest
      * @param string $url
      */
     public function __construct(string $name,
+                                string $category,
                                 int $year,
                                 string $format,
                                 string $author,
@@ -79,6 +89,7 @@ class CreateItemRequest
                                 string $url)
     {
         $this->name = $name;
+        $this->category = $category;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -94,6 +105,14 @@ class CreateItemRequest
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return UuidInterface
+     */
+    public function getCategory(): UuidInterface
+    {
+        return Uuid::fromString($this->category);
     }
 
     /**

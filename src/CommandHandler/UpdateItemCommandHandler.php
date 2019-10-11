@@ -4,17 +4,14 @@ namespace App\CommandHandler;
 
 use App\Command\UpdateItemCommand;
 use App\Repository\ItemRepository;
-use App\Repository\ItemCategoryRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CollectionRepository;
 use App\Repository\ItemCollectionRepository;
-use App\Repository\Exception\ItemCategoryNotFoundException;
 use App\Repository\Exception\ItemCollectionNotFoundException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\ItemNotUpdatedException;
 use Psr\Log\LoggerInterface;
 use App\Entity\Item;
-use App\Entity\ItemCategory;
 use App\Entity\ItemCollection;
 
 class UpdateItemCommandHandler implements CommandHandlerInterface
@@ -32,10 +29,6 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
      */
     private $logger;
     /**
-     * @var ItemCategoryRepository
-     */
-    private $itemCategoryRepository; 
-    /**
      * @var CategoryRepository
      */
     private $categoryRepository; 
@@ -52,7 +45,6 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
      * @param MessageBusInterface $eventBus
      * @param ItemRepository $repository
      * @param LoggerInterface $logger
-     * @param ItemCategoryRepository $itemCategoryRepository
      * @param CategoryRepository $categoryRepository
      * @param ItemCollectionRepository $itemCollectionRepository
      * @param CollectionRepository $collectionRepository
@@ -61,7 +53,6 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
         MessageBusInterface $eventBus,
         ItemRepository $repository,
         LoggerInterface $logger,
-        ItemCategoryRepository $itemCategoryRepository,
         CategoryRepository $categoryRepository,
         ItemCollectionRepository $itemCollectionRepository,
         CollectionRepository $collectionRepository
@@ -70,7 +61,6 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
         $this->eventBus = $eventBus;
         $this->repository = $repository;
         $this->logger = $logger;
-        $this->itemCategoryRepository = $itemCategoryRepository;
         $this->categoryRepository = $categoryRepository;
         $this->itemCollectionRepository = $itemCollectionRepository;
         $this->collectionRepository = $collectionRepository;
@@ -83,8 +73,10 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
     {
         try {
              $item = $this->repository->getItem($command->getId());
+             $category = $this->categoryRepository->getCategory($command->getCategory());
 
              $item->setName($command->getName());
+             $item->setCategory($category);
              $item->setYear($command->getYear());
              $item->setFormat($command->getFormat());
              $item->setAuthor($command->getAuthor());
@@ -95,9 +87,6 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
              
             $this->repository->save($item);
 
-            if (null !== $command->getCategories()) {
-                $this->handleItemCategories($item, $command->getCategories());
-            }
             if (null !== $command->getCollections()) {
                 $this->handleItemCollections($item, $command->getCollections());
             }
@@ -105,26 +94,6 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
             $this->logger->error($e->getMessage());
             throw new ItemNotUpdatedException('Item was not updated: '.$e->getMessage());
         }
-    }
-
-    /**
-     * @param Item $item
-     * @param array $categories
-     */
-    public function handleItemCategories(Item $item, array $categories): void
-    {
-        $item->getCategories()->clear();
-        foreach ($categories as $categoryId) {
-            $category = $this->categoryRepository->getCategory($categoryId);
-            try {
-                $itemCategoryEntity = $this->itemCategoryRepository->getItemCategory($item, $category);
-                $item->getCategories()->add($itemCategoryEntity);
-            } catch (ItemCategoryNotFoundException $e) {
-                $itemCategoryEntity = new ItemCategory($item, $category);
-                $item->getCategories()->add($itemCategoryEntity);
-            }
-        }
-        $this->repository->save($item);
     }
 
     /**

@@ -15,19 +15,29 @@ class CreateItemCommandTest extends TestCase
      */
     public function test_construct(): void
     {
-        $item = ItemMother::random()->jsonSerialize();
+        $item = ItemMother::random();
         $command = new CreateItemCommand(
-            Uuid::fromString($item['id']), $item['name'], $item['year'], $item['format'], $item['author'],
-            $item['publisher'], $item['description'], $item['store'], $item['url'], null, null
+            $item->getId(),
+            $item->getName(),
+            $item->getCategory()->getId(),
+            $item->getYear(), 
+            $item->getFormat(), 
+            $item->getAuthor(), 
+            $item->getPublisher(), 
+            $item->getDescription(), 
+            $item->getStore(), 
+            $item->getUrl(), 
+            null
             );
-        $this->assertSame($item['id'], (string) $command->getId());
-        $this->assertSame($item['name'], $command->getName());
-        $this->assertSame($item['year'], $command->getYear());
-        $this->assertSame($item['format'], $command->getFormat());
-        $this->assertSame($item['author'], $command->getAuthor());
-        $this->assertSame($item['publisher'], $command->getPublisher());
-        $this->assertSame($item['description'], $command->getDescription());
-        $this->assertSame($item['store'], $command->getStore());
-        $this->assertSame($item['url'], $command->getUrl());
+        $this->assertSame($item->getId()->toString(), $command->getId()->toString());
+        $this->assertSame($item->getName(), $command->getName());
+        $this->assertSame($item->getCategory()->getId()->toString(), $command->getCategory()->toString());
+        $this->assertSame($item->getYear(), $command->getYear());
+        $this->assertSame($item->getFormat(), $command->getFormat());
+        $this->assertSame($item->getAuthor(), $command->getAuthor());
+        $this->assertSame($item->getPublisher(), $command->getPublisher());
+        $this->assertSame($item->getDescription(), $command->getDescription());
+        $this->assertSame($item->getStore(), $command->getStore());
+        $this->assertSame($item->getUrl(), $command->getUrl());
     }
 }

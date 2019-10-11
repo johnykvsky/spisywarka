@@ -21,6 +21,12 @@ class ItemDTO {
      */
     private $name;
     /**
+     * @var string
+     * @Type("string")
+     * @Assert\Uuid()
+     */
+    private $category;
+    /**
      * @var int|null
      * @Type("int")
      * @Assert\Length(max=255)
@@ -66,17 +72,13 @@ class ItemDTO {
      * @var array|null
      * @Type("array")
      */
-    private $categories;
-    /**
-     * @var array|null
-     * @Type("array")
-     */
     private $collections;
 
     /**
      * ItemDTO constructor.
      * @param string|null $id
      * @param string $name
+     * @param string $category
      * @param int|null $year
      * @param string|null $format
      * @param string|null $author
@@ -84,11 +86,11 @@ class ItemDTO {
      * @param string|null $description
      * @param string|null $store
      * @param string|null $url
-     * @param array|null $categories
      * @param array|null $collections
      */
     public function __construct(?string $id,
                                 string $name,
+                                string $category,
                                 ?int $year,
                                 ?string $format,
                                 ?string $author,
@@ -96,12 +98,12 @@ class ItemDTO {
                                 ?string $description,
                                 ?string $store,
                                 ?string $url,
-                                ?array $categories,
                                 ?array $collections)
     {
 
         $this->id = $id;
         $this->name = $name;
+        $this->category = $category;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -109,7 +111,6 @@ class ItemDTO {
         $this->description = $description;
         $this->store = $store;
         $this->url = $url;
-        $this->categories = $categories;
         $this->collections = $collections;
     }
 
@@ -131,6 +132,26 @@ class ItemDTO {
     public function setId(?string $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return ?UuidInterface
+     */
+    public function getCategory(): ?UuidInterface
+    {
+        if (!empty($this->category)) {
+            return Uuid::fromString($this->category);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string|null $category
+    */
+    public function setCategory(?string $category): void
+    {
+        $this->category = $category;
     }
 
     /**
@@ -195,14 +216,6 @@ class ItemDTO {
     public function getUrl(): ?string
     {
         return $this->url;
-    }
-
-    /**
-     * @return ?array
-     */
-    public function getCategories(): ?array
-    {
-        return $this->categories;
     }
 
     /**

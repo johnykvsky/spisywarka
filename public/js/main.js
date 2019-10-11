@@ -15,7 +15,7 @@ $(document).ready(function() {
       }
     });
 
-    $('#item_categories').select2({
+    $('#item_category').select2({
       ajax: {
         url: '/api/categories/autocomplete',
         dataType: 'json',

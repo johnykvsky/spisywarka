@@ -38,15 +38,8 @@ final class ItemType extends AbstractType  implements DataMapperInterface
     {
         $builder
             ->add('name', TextType::class)
-            ->add('year', IntegerType::class, ['required' => false])
-            ->add('format', TextType::class, ['required' => false])
-            ->add('author', TextType::class, ['required' => false])
-            ->add('publisher', TextType::class, ['required' => false])
-            ->add('description', TextareaType::class, ['required' => false])
-            ->add('store', TextType::class, ['required' => false])
-            ->add('url', UrlType::class, ['required' => false])
-            ->add('categories', Select2EntityType::class, [
-                'multiple' => true,
+            ->add('category', Select2EntityType::class, [
+                'multiple' => false,
                 'remote_route' => 'admin_categories_autocomplete',
                 'remote_params' => [], // static route parameters for request->query
                 'class' => '\App\Entity\Category',
@@ -61,6 +54,13 @@ final class ItemType extends AbstractType  implements DataMapperInterface
                 'language' => 'en',
                 'placeholder' => 'Select a category',
             ])
+            ->add('year', IntegerType::class, ['required' => false])
+            ->add('format', TextType::class, ['required' => false])
+            ->add('author', TextType::class, ['required' => false])
+            ->add('publisher', TextType::class, ['required' => false])
+            ->add('description', TextareaType::class, ['required' => false])
+            ->add('store', TextType::class, ['required' => false])
+            ->add('url', UrlType::class, ['required' => false])
             ->add('collections', Select2EntityType::class, [
                 'multiple' => true,
                 'remote_route' => 'admin_collections_autocomplete',
@@ -80,7 +80,7 @@ final class ItemType extends AbstractType  implements DataMapperInterface
             ->add('submit', SubmitType::class)
             ->setDataMapper($this);
 
-            $builder->get('categories')->addModelTransformer($this->uuidToCategoryTransformer);
+            $builder->get('category')->addModelTransformer($this->uuidToCategoryTransformer);
             $builder->get('collections')->addModelTransformer($this->uuidToCollectionTransformer);
     }
     
@@ -104,11 +104,12 @@ final class ItemType extends AbstractType  implements DataMapperInterface
     public function mapDataToForms($itemDTO, $forms): void
     {
         if (null == $itemDTO) {
-            $itemDTO = new ItemDTO(null, '', null, null, null, null, null, null, null, [], []);
+            $itemDTO = new ItemDTO(null, '', '', null, null, null, null, null, null, null, []);
         }
 
         $forms = iterator_to_array($forms);
         $forms['name']->setData($itemDTO->getName());
+        $forms['category']->setData($itemDTO->getCategory());
         $forms['description']->setData($itemDTO->getDescription());
         $forms['year']->setData($itemDTO->getYear());
         $forms['format']->setData($itemDTO->getFormat());
@@ -116,7 +117,6 @@ final class ItemType extends AbstractType  implements DataMapperInterface
         $forms['publisher']->setData($itemDTO->getPublisher());
         $forms['store']->setData($itemDTO->getStore());
         $forms['url']->setData($itemDTO->getUrl());
-        $forms['categories']->setData($itemDTO->getCategories());
         $forms['collections']->setData($itemDTO->getCollections());
     }
 
@@ -132,6 +132,7 @@ final class ItemType extends AbstractType  implements DataMapperInterface
         $itemDTO = new ItemDTO(
             null, 
             $forms['name']->getData(), 
+            $forms['category']->getData(),
             $forms['year']->getData(), 
             $forms['format']->getData(), 
             $forms['author']->getData(), 
@@ -139,7 +140,6 @@ final class ItemType extends AbstractType  implements DataMapperInterface
             $forms['description']->getData(),
             $forms['store']->getData(),
             $forms['url']->getData(),
-            $forms['categories']->getData(),
             $forms['collections']->getData()
         );
     }

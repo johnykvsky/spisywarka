@@ -92,10 +92,10 @@ class Item implements \JsonSerializable
      */
     private $deletedAt;
 
-    /** 
-     * @ORM\OneToMany(targetEntity="App\Entity\ItemCategory", mappedBy="item", orphanRemoval=true, cascade={"persist", "remove"}) 
+    /**
+     * @ORM\OneToOne(targetEntity="Category")
      */
-    protected $categories;
+    private $category;
 
     /** 
      * @ORM\OneToMany(targetEntity="App\Entity\ItemCollection", mappedBy="item", orphanRemoval=true, cascade={"persist", "remove"}) 
@@ -110,6 +110,7 @@ class Item implements \JsonSerializable
     /**
      * @param UuidInterface $id
      * @param string $name
+     * @param Category $category
      * @param ?int $year
      * @param ?string $format
      * @param ?string $author
@@ -122,6 +123,7 @@ class Item implements \JsonSerializable
     public function __construct(
         UuidInterface $id,
         string $name,
+        Category $category,
         ?int $year,
         ?string $format,
         ?string $author,
@@ -133,6 +135,7 @@ class Item implements \JsonSerializable
     {
         $this->setId($id);
         $this->setName($name);
+        $this->setCategory($category);
         $this->setYear($year);
         $this->setFormat($format);
         $this->setAuthor($author);
@@ -140,7 +143,6 @@ class Item implements \JsonSerializable
         $this->setDescription($description);
         $this->setStore($store);
         $this->setUrl($url);
-        $this->categories = new ArrayCollection();
         $this->collections = new ArrayCollection();
     }
     
@@ -161,6 +163,25 @@ class Item implements \JsonSerializable
     public function getId(): UuidInterface
     {
         return $this->id;
+    }
+
+    /**
+     * @param Category $category
+     * @return Item
+     */
+    public function setCategory(Category $category): self
+    {
+        $this->category = $category;
+        
+        return $this;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
     }
 
     /**
@@ -325,14 +346,6 @@ class Item implements \JsonSerializable
         return $this->collections;
     }
     
-    /*
-     * @return ArrayCollection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-    
     /**
      * @return Loan[]
      */
@@ -346,22 +359,6 @@ class Item implements \JsonSerializable
         return $this->slug;
     }
 
-    /**
-     * @param Category $category
-     * @return bool
-     */
-    public function isInCategory(Category $category): bool
-    {
-        return $this->getCategories()->exists(function($key, $element) use ($category){
-            return $category->getId()->equals($element->getCategory()->getId());
-        });
-    }
-
-    public function addCategory(ItemCategory $itemCategory): void
-    {
-        $this->categories->add($itemCategory);
-    }
-    
     public function addCollection(ItemCollection $itemCollection): void
     {
         $this->collections->add($itemCollection);
@@ -377,20 +374,6 @@ class Item implements \JsonSerializable
             return $collection->getId()->equals($element->getCollection()->getId());
         });
     }
-    
-    /**
-     * 
-     * @return array
-     */
-    public function getItemCategories(): array
-    {
-        $categories = [];
-        foreach ($this->getCategories() as $itemCategory) {
-            $categories[] = $itemCategory->getCategory();
-        }
-        return $categories;
-    }
-
     
     /**
      *
@@ -413,6 +396,7 @@ class Item implements \JsonSerializable
         return [
             'id' => $this->getId()->toString(),
             'name' => $this->getName(),
+            'category' => $this->getCategory(),
             'year' => $this->getYear(),
             'format' => $this->getFormat(),
             'author' => $this->getAuthor(),
@@ -421,7 +405,6 @@ class Item implements \JsonSerializable
             'store' => $this->getStore(),
             'url' => $this->getUrl(),
             'collections' => $this->getItemCollections(),
-            'categories' => $this->getItemCategories(),
             'loaned' => $this->getLoaned(),
             'slug' => $this->getSlug(),
         ];

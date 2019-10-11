@@ -24,6 +24,13 @@ class UpdateItemRequest
      */
     private $name;
     /**
+     * @var string
+     * @Type("string")
+     * @Assert\NotBlank()
+     * @Assert\Uuid()
+     */
+    private $category;
+    /**
      * @var int
      * @Type("int")
      * @Assert\Length(max=255)
@@ -70,6 +77,7 @@ class UpdateItemRequest
      * UpdateItemRequest constructor.
      * @param string $id
      * @param string $name
+     * @param string $category
      * @param int $year
      * @param string $format
      * @param string $author
@@ -80,6 +88,7 @@ class UpdateItemRequest
      */
     public function __construct(string $id,
                                 string $name,
+                                string $category,
                                 int $year,
                                 string $format,
                                 string $author,
@@ -91,6 +100,7 @@ class UpdateItemRequest
 
         $this->id = $id;
         $this->name = $name;
+        $this->category = $category;
         $this->year = $year;
         $this->format = $format;
         $this->author = $author;
@@ -114,6 +124,14 @@ class UpdateItemRequest
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return UuidInterface
+     */
+    public function getCategory(): UuidInterface
+    {
+        return Uuid::fromString($this->category);
     }
 
     /**

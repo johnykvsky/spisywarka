@@ -10,7 +10,6 @@ use App\Repository\ItemRepository;
 use App\Repository\CollectionRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ItemCollectionRepository;
-use App\Repository\ItemCategoryRepository;
 use App\Tests\Mothers\ItemMother;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -33,7 +32,7 @@ class CreateItemCommandHandlerTest extends TestCase
         $categoryRepository = $this->createMock(CategoryRepository::class);
         $collectionRepository = $this->createMock(CollectionRepository::class);
         $itemCollectionRepository = $this->createMock(ItemCollectionRepository::class);
-        $itemCategoryRepository = $this->createMock(ItemCategoryRepository::class);
+        $categoryRepository->method('getCategory')->willReturn($itemMock->getCategory());
 
         $repository
             ->expects(self::once())
@@ -43,6 +42,7 @@ class CreateItemCommandHandlerTest extends TestCase
                     function (Item $item) use ($itemMock) {
                         self::assertSame($itemMock->getId(), $item->getId());
                         self::assertSame($itemMock->getName(), $item->getName());
+                        self::assertSame($itemMock->getCategory()->getId()->toString(), $item->getCategory()->getId()->toString());
                         self::assertSame($itemMock->getYear(), $item->getYear());
                         self::assertSame($itemMock->getFormat(), $item->getFormat());
                         self::assertSame($itemMock->getAuthor(), $item->getAuthor());
@@ -57,9 +57,9 @@ class CreateItemCommandHandlerTest extends TestCase
             );
 
         $command = new CreateItemCommand(
-            $itemMock->getId(), $itemMock->getName(), $itemMock->getYear(), $itemMock->getFormat(),
+            $itemMock->getId(), $itemMock->getName(), $itemMock->getCategory()->getId(), $itemMock->getYear(), $itemMock->getFormat(),
             $itemMock->getAuthor(), $itemMock->getPublisher(), $itemMock->getDescription(),
-            $itemMock->getStore(), $itemMock->getUrl(), null, null
+            $itemMock->getStore(), $itemMock->getUrl(), null
             );
         
         $eventBus = $this->createMock(MessageBusInterface::class);
@@ -69,7 +69,7 @@ class CreateItemCommandHandlerTest extends TestCase
         
         $logger = $this->createMock(LoggerInterface::class);
         
-        $handler = new CreateItemCommandHandler($eventBus, $repository, $logger, $categoryRepository, $collectionRepository, $itemCategoryRepository, $itemCollectionRepository);
+        $handler = new CreateItemCommandHandler($eventBus, $repository, $logger, $categoryRepository, $collectionRepository, $itemCollectionRepository);
         
         $handler($command);
     }

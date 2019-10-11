@@ -5,10 +5,8 @@ namespace App\CommandHandler;
 use App\Command\CreateItemCommand;
 use App\Event\ItemCreatedEvent;
 use App\Entity\Item;
-use App\Entity\ItemCategory;
 use App\Entity\ItemCollection;
 use App\Repository\ItemRepository;
-use App\Repository\ItemCategoryRepository;
 use App\Repository\ItemCollectionRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\ItemNotCreatedException;
@@ -39,10 +37,6 @@ class CreateItemCommandHandler implements CommandHandlerInterface
      */
     private $collectionRepository;
     /**
-     * @var ItemCategoryRepository
-     */
-    private $itemCategoryRepository; 
-    /**
      * @var ItemCollectionRepository
      */
     private $itemCollectionRepository; 
@@ -53,7 +47,6 @@ class CreateItemCommandHandler implements CommandHandlerInterface
      * @param LoggerInterface $logger
      * @param CategoryRepository $categoryRepository
      * @param CollectionRepository $collectionRepository
-     * @param ItemCategoryRepository $itemCategoryRepository
      * @param ItemCollectionRepository $itemCollectionRepository
      */
     public function __construct(
@@ -62,7 +55,6 @@ class CreateItemCommandHandler implements CommandHandlerInterface
         LoggerInterface $logger,
         CategoryRepository $categoryRepository,
         CollectionRepository $collectionRepository,
-        ItemCategoryRepository $itemCategoryRepository,
         ItemCollectionRepository $itemCollectionRepository)
     {
         $this->eventBus = $eventBus;
@@ -70,7 +62,6 @@ class CreateItemCommandHandler implements CommandHandlerInterface
         $this->logger = $logger;
         $this->categoryRepository = $categoryRepository;
         $this->collectionRepository = $collectionRepository;
-        $this->itemCategoryRepository = $itemCategoryRepository;
         $this->itemCollectionRepository = $itemCollectionRepository;
     }
 
@@ -80,9 +71,11 @@ class CreateItemCommandHandler implements CommandHandlerInterface
     public function __invoke(CreateItemCommand $command)
     {
         try {
+            $category = $this->categoryRepository->getCategory($command->getCategory());
             $item = new Item(
                 $command->getId(),
                 $command->getName(),
+                $category,
                 $command->getYear(),
                 $command->getFormat(),
                 $command->getAuthor(),
@@ -91,10 +84,7 @@ class CreateItemCommandHandler implements CommandHandlerInterface
                 $command->getStore(),
                 $command->getUrl()
                 );
-
-            if (null !== $command->getCategories()) {
-                $this->handleItemCategories($item, $command->getCategories());
-            }      
+   
             if (null !== $command->getCollections()) {
                 $this->handleItemCollections($item, $command->getCollections());
             }      
@@ -103,19 +93,6 @@ class CreateItemCommandHandler implements CommandHandlerInterface
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
             throw new ItemNotCreatedException('Item was not created: '.$e->getMessage());
-        }
-    }
-
-    /**
-     * @param Item $item
-     * @param array $categories
-     */
-    public function handleItemCategories(Item $item, array $categories): void
-    {
-        foreach ($categories as $categoryId) {
-            $category = $this->categoryRepository->getCategory($categoryId);
-            $itemCategoryEntity = new ItemCategory($item, $category);
-            $item->getCategories()->add($itemCategoryEntity);
         }
     }
 
