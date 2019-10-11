@@ -92,7 +92,7 @@ class Item implements \JsonSerializable
     private $deletedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="Category")
+     * @ORM\OneToOne(targetEntity="Category", inversedBy="items")
      */
     private $category;
 

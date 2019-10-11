@@ -21,7 +21,7 @@ What's included, backend:
  * API documentation (Swagger) via /api/doc
  * Full use of Message Bus, Requests, Commands and Command Handlers
  * Support for Event Bus (working, just not doing anything serious)
- * Forms with use of DTO and DataTransformers
+ * Forms with use of DTO and DataTransformers, no entities
  * Tests included!
  * PhpDocs all the way!
  * Type Hinting friendly!
@@ -31,11 +31,10 @@ What's included, backend:
 What's planned:
 
  * JWT Token Authenticator
- * Slugs
+ * Guest user pages, for showing single items and items in given category/collection
  * User management
  * Allow for multiple users see only their own data (via Doctrine filters)
  * Translations
- * Guest user pages, for showing single items and items in given category/collection
 
 Current API flow:
  * Initial validation of incoming request data on Request

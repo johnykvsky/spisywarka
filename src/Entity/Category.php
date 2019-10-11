@@ -53,7 +53,7 @@ class Category implements \JsonSerializable
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="category")
+     * @ORM\OneToOne(targetEntity="App\Entity\Item", mappedBy="category")
      */
     protected $items;
     
