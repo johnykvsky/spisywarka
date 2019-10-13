@@ -92,7 +92,7 @@ class AdminProfileController extends AbstractController
             $form->addError($error);
         }
 
-        return $this->render('security/profile.html.twig', [
+        return $this->render('admin/profile.html.twig', [
             'form' => $form->createView()
         ]);
     }

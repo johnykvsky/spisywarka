@@ -27,6 +27,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Enum\UserStatusEnum;
 use App\Request\LoginRequest;
 use App\Traits\JWTHelper;
+use App\Repository\Exception\UserNotFoundException;
 
 class TokenController extends AbstractController
 {
@@ -93,16 +94,8 @@ class TokenController extends AbstractController
         $token = $this->getToken($rawRequest);
         try {
             $payload = $this->jwtService->decode($token);
-            $user = $this->repository->getUser(Uuid::fromString($payload->id));
-
-            $extraFields = [
-                'firstName' => $user->getFirstName(),
-                'lastName' => $user->getLastName(),
-                'status' => $user->getStatus()->getValue(),
-                'roles' => $user->getRoles(),
-            ];
-
-            $newToken = $this->jwtService->generateToken($user->getId()->toString(), $user->getEmail(), $extraFields);
+            $user = $this->repository->getUser(Uuid::fromString($payload->getId()));
+            $newToken = $this->jwtService->generateToken($user);
             return $this->json(['token' => $newToken]);
         } catch (UserNotFoundException $e) {
             return $this->jsonError(ApiError::ENTITY_READ_ERROR,
@@ -151,16 +144,13 @@ class TokenController extends AbstractController
      * @param UserPasswordEncoderInterface $encoder
      * @return JsonResponse
      */
-    public function loginAction(LoginRequest $request, UserPasswordEncoderInterface $encoder): JsonResponse
+    public function loginAction(LoginRequest $request, UserPasswordEncoderInterface $encoder, ConstraintViolationListInterface $validationErrors): JsonResponse
     {
-        /** @var ConstraintViolationList $errors */
-        $errors = $this->validator->validate($request);
-
-        if ($errors->count()) {
+        if ($validationErrors->count()) {
             return $this->jsonError(ApiError::ENTITY_VALIDATION_ERROR,
                 'Login request validations errors',
                 Response::HTTP_BAD_REQUEST,
-                $this->parseFormErrors($errors)
+                $this->parseFormErrors($validationErrors)
             );
         }
 
@@ -183,14 +173,7 @@ class TokenController extends AbstractController
             );
         }
 
-        $extraFields = [
-            'firstName' => $user->getFirstName(),
-            'lastName' => $user->getLastName(),
-            'status' => $user->getStatus()->getValue(),
-            'roles' => $user->getRoles(),
-        ];
-
-        $token = $this->jwtService->generateToken($user->getId()->toString(), $user->getEmail(), $extraFields);
+        $token = $this->jwtService->generateToken($user);
         return $this->json(['token' => $token]);
     }   
 }

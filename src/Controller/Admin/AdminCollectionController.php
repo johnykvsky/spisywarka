@@ -87,7 +87,7 @@ class AdminCollectionController extends AbstractController
             $form->addError($error);
         }
 
-        return $this->render('collection/form.html.twig', [
+        return $this->render('admin/collection/form.html.twig', [
             'form' => $form->createView(),
             'id' => $id
         ]);
@@ -101,7 +101,7 @@ class AdminCollectionController extends AbstractController
      */ 
     public function collectionList(PaginatorInterface $paginator, Request $request): Response
     {         
-        return $this->render('collection/list.html.twig', [ 
+        return $this->render('admin/collection/list.html.twig', [ 
             'pagination' => $paginator->paginate(
              $this->repository->listAllCollections(), $request->query->getInt('page', 1),10) 
         ]); 

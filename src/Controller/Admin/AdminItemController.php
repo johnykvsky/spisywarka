@@ -87,7 +87,7 @@ class AdminItemController extends AbstractController
             $form->addError($error);
         }
 
-        return $this->render('item/form.html.twig', [
+        return $this->render('admin/item/form.html.twig', [
             'form' => $form->createView(),
             'id' => $id
         ]);
@@ -103,7 +103,7 @@ class AdminItemController extends AbstractController
     {         
         $searchQuery = $request->query->getAlnum('search');
 
-        return $this->render('item/list.html.twig', [ 
+        return $this->render('admin/item/list.html.twig', [ 
             'pagination' => $paginator->paginate(
              $this->repository->listAllItems($searchQuery), $request->query->getInt('page', 1),10),
              'searchQuery'  => $searchQuery

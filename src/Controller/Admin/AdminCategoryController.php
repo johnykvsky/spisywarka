@@ -90,7 +90,7 @@ class AdminCategoryController extends AbstractController
             $form->addError($error);
         }
 
-        return $this->render('category/form.html.twig', [
+        return $this->render('admin/category/form.html.twig', [
             'form' => $form->createView(),
             'id' => $id,
         ]);
@@ -104,7 +104,7 @@ class AdminCategoryController extends AbstractController
      */ 
     public function categoryList(PaginatorInterface $paginator, Request $request): Response
     {         
-        return $this->render('category/list.html.twig', [ 
+        return $this->render('admin/category/list.html.twig', [ 
             'pagination' => $paginator->paginate(
              $this->repository->listAllCategories(), $request->query->getInt('page', 1),10) 
         ]); 

@@ -13,6 +13,7 @@ What's included, frontend:
  * SB Admin 2 template with dark sidebar
  * Modal confirmation for record delete and logout
  * Select2 autocomplete for Item/Category/Collection searching via ajax request
+ * Guest pages for Item, listing items in Category/Collection
 
 What's included, backend:
 
@@ -30,8 +31,7 @@ What's included, backend:
  * PhpStorm will love this...
 
 What's planned:
- 
- * Guest user pages, for showing single items and items in given category/collection
+
  * User management
  * Allow for multiple users see only their own data (via Doctrine filters)
  * Translations

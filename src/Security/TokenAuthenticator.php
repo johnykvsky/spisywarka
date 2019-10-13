@@ -63,7 +63,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        $apiToken = str_replace('Bearer ', '', $request->headers->get('Authorization'));
+        $apiToken = str_replace('Bearer ', '', $request->headers->get('Authorization') ?? '');
 
         return array(
             'token' => $apiToken,
@@ -92,7 +92,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
         try {
             $payload = $this->jwtService->decode($apiToken);
-            $userEntity = $this->userRepository->getUser(Uuid::fromString($payload->id));
+            $userEntity = $this->userRepository->getUser(Uuid::fromString($payload->getId()));
         } catch (\Exception $e) {
             throw new CustomUserMessageAuthenticationException($e->getMessage());
         }

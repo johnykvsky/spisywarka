@@ -89,7 +89,7 @@ class AdminLoanController extends AbstractController
             $form->addError($error);
         }
 
-        return $this->render('loan/form.html.twig', [
+        return $this->render('admin/loan/form.html.twig', [
             'form' => $form->createView(),
             'id' => $id
         ]);
@@ -105,7 +105,7 @@ class AdminLoanController extends AbstractController
     {         
         $searchQuery = $request->query->getAlnum('search');
 
-        return $this->render('loan/list.html.twig', [ 
+        return $this->render('admin/loan/list.html.twig', [ 
             'pagination' => $paginator->paginate(
              $this->repository->listAllLoans($searchQuery), $request->query->getInt('page', 1),10),
              'searchQuery'  => $searchQuery

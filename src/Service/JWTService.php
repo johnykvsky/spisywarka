@@ -4,6 +4,8 @@ namespace App\Service;
 
 use Firebase\JWT\JWT;
 use Ramsey\Uuid\UuidInterface;
+use App\Entity\User;
+use App\Security\ValueObject\TokenPayload;
 
 class JWTService
 {
@@ -24,36 +26,43 @@ class JWTService
     }
 
     /**
-     * @param string $userId
-     * @param string $email
-     * @param array $extraFields
+     * @param User $user
      * @return string
      */
-    public function generateToken(string $userId, string $email, array $extraFields = []): string
+    public function generateToken(User $user): string
     {
         $issuedAt = time();
         $expirationTime = $issuedAt + 1800;  // token is valid for 30 minutes from the issue time
-        $payload = array(
-            'id' => $userId,
-            'email' => $email,
-            'iat' => $issuedAt,
-            'exp' => $expirationTime,
+        $tokenPayload = new TokenPayload(
+            $issuedAt,
+            $expirationTime,
+            $user->getId()->toString(),
+            $user->getEmail(),
+            $user->getFirstName(),
+            $user->getLastName(),
+            $user->getStatus()->getValue(),
+            $user->getRoles()
         );
-        foreach ($extraFields as $field => $value) {
-            if (!array_key_exists($field, $payload)) {
-                $payload[$field] = $value;
-            }
-        }
 
-        return JWT::encode($payload, $this->privateKey, $this->algorithm);
+        return JWT::encode($tokenPayload->jsonSerialize(), $this->privateKey, $this->algorithm);
     }
 
     /**
      * @param string $token
-     * @return object
+     * @return TokenPayload
      */
-    public function decode(string $token): object
+    public function decode(string $token): TokenPayload
     {
-        return JWT::decode($token, $this->privateKey, [$this->algorithm]);
+        $payload = (array) JWT::decode($token, $this->privateKey, [$this->algorithm]);
+        return new TokenPayload(
+            $payload['iat'],
+            $payload['exp'],
+            $payload['id'],
+            $payload['email'],
+            $payload['firstName'],
+            $payload['lastName'],
+            $payload['status'],
+            $payload['roles']
+        ); 
     }
 }

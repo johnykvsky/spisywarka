@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %} 
+{% block body %}
+<div class="card mt-2 border-bottom-primary">
+  <div class="card-body">
+    Category {{ category.getName }}. {{ category.getDescription }}
+  </div>
+</div>
+    {% if items != null %}
+      {% for item in items %}
+    <div class="row pt-2 pb-2 justify-content-center ">
+        <div class="card border-left-success col-12 pr-0 pl-0">
+            <div class="card-header font-weight-bold text-primary ">
+                Item: {{ item.getName }}
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                  <dt class="col-sm-3">Author</dt>
+                  <dd class="col-sm-9">{{ item.getAuthor }}</dd>
+
+                  <dt class="col-sm-3">Format</dt>
+                  <dd class="col-sm-9">{{ item.getFormat }}</dd>
+
+                  <dt class="col-sm-3">Collections</dt>
+                  <dd class="col-sm-9">
+                    {% for collection in item.getItemCollections %}
+                        <a href="{{ path('collection', {id: collection.getId.toString, slug: collection.getSlug }) }}">{{ collection.getName }}</a>, 
+                    {% endfor %}
+                  </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="w-100"></div>
+      {% endfor %}
+    {% endif %}
+    {% if error != null %}
+        Ups, error: {{ error }}
+    {% endif %}
+{% endblock %}

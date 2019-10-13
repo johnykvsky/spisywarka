@@ -63,7 +63,7 @@ class AdminCollectionItemsController extends AbstractController
     {         
         $collectionId = Uuid::fromString($id);
         $collection = $this->collectionRepository->getCollection($collectionId);
-        return $this->render('collection/items_list.html.twig', [ 
+        return $this->render('admin/collection/items_list.html.twig', [ 
             'collection' => $collection,
             'pagination' => $paginator->paginate(
              $this->repository->listAllItemsInCollection($collectionId), $request->query->getInt('page', 1),10) 

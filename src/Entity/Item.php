@@ -92,7 +92,7 @@ class Item implements \JsonSerializable
     private $deletedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="Category", inversedBy="items")
+     * @ORM\OneToOne(targetEntity="Category")
      */
     private $category;
 
@@ -353,11 +353,6 @@ class Item implements \JsonSerializable
         return $this->loaned;
     }
 
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
     public function addCollection(ItemCollection $itemCollection): void
     {
         $this->collections->add($itemCollection);
@@ -387,6 +382,14 @@ class Item implements \JsonSerializable
         return $collections;
     }
     
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
     /**
      * @return array
      */

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %} 
+{% block body %}
+    {% if item != null %}
+    <div class="row pt-2 pb-2 justify-content-center ">
+        <div class="card border-left-success col-12 pr-0 pl-0">
+            <div class="card-header font-weight-bold text-primary">
+                Item: {{ item.getName }}
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                  <dt class="col-sm-3">Author</dt>
+                  <dd class="col-sm-9">{{ item.getAuthor }}</dd>
+
+                  <dt class="col-sm-3">Format</dt>
+                  <dd class="col-sm-9">{{ item.getFormat }}</dd>
+
+                  <dt class="col-sm-3">Year</dt>
+                  <dd class="col-sm-9">{{ item.getYear }}</dd>
+
+                  <dt class="col-sm-3">Publisher</dt>
+                  <dd class="col-sm-9">{{ item.getPublisher }}</dd>
+
+                  <dt class="col-sm-3">Store</dt>
+                  <dd class="col-sm-9">{{ item.getStore }}</dd>
+
+                  <dt class="col-sm-3">Url</dt>
+                  <dd class="col-sm-9">{{ item.getUrl }}</dd>
+
+                  <dt class="col-sm-3">Description</dt>
+                  <dd class="col-sm-9">{{ item.getDescription }}</dd>
+
+                  <dt class="col-sm-3">Category</dt>
+                  <dd class="col-sm-9"><a href="{{ path('category', {id: item.getCategory.getId.toString, slug: item.getCategory.getSlug }) }}">{{ item.getCategory.getName }}</a></dd>
+
+                  <dt class="col-sm-3">Collections</dt>
+                  <dd class="col-sm-9">
+                    <ul>
+                    {% for collection in item.getItemCollections %}
+                          <li><a href="{{ path('collection', {id: collection.getId.toString, slug: collection.getSlug }) }}">{{ collection.getName }}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if error != null %}
+        Ups, error: {{ error }}
+    {% endif %}
+{% endblock %}

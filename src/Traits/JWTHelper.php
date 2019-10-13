@@ -15,7 +15,7 @@ trait JWTHelper
         if (empty($request->headers->get('Authorization'))) {
             throw new \InvalidArgumentException('No valid JWT token');
         }
-        return str_replace('Bearer ', '', $request->headers->get('Authorization'));
+        return str_replace('Bearer ', '', $request->headers->get('Authorization') ?? '');
     }
 
     /**
@@ -25,12 +25,18 @@ trait JWTHelper
     public function getTokenPayload(Request $request): array
     {
         $token = $this->getToken($request);
-        if ($token) {
-            $payload = \explode('.', $token)[1];
-            $decodedPayload = \base64_decode($payload);
-            return \json_decode($decodedPayload, true);
+
+        if (empty($token)) {
+            throw new \InvalidArgumentException('No valid JWT token');
         }
 
-        return [];
+        $payload = \explode('.', $token)[1];
+        $decodedPayload = \base64_decode($payload);
+
+        if (empty($decodedPayload)) {
+            throw new \InvalidArgumentException('No valid JWT token payload');
+        }
+
+        return \json_decode($decodedPayload, true);
     }
 }

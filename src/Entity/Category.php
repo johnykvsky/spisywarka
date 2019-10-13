@@ -53,7 +53,7 @@ class Category implements \JsonSerializable
     private $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Item", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="category")
      */
     protected $items;
     
@@ -121,6 +121,22 @@ class Category implements \JsonSerializable
     {
         return $this->description;
     }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getItems(): ?Collection
+    {
+        return $this->items;
+    }
     
     /**
      * @param ?string $description
@@ -132,18 +148,13 @@ class Category implements \JsonSerializable
 
         return $this;
     }
-    
-    public function getItems(): ?Collection
-    {
-        return $this->items;
-    }
-    
+
     /**
      * @return bool
      */
     public function hasItems(): bool
     {
-       return !($this->getItems() === null || $this->getItems()->isEmpty());
+        return !($this->getItems() === null || $this->getItems()->isEmpty());
     }
 
     /**

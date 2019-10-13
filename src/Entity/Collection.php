@@ -146,6 +146,14 @@ class Collection implements \JsonSerializable
     {
         return !($this->getItems() === null || $this->getItems()->isEmpty());
     }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
     
     /**
      * @return array
