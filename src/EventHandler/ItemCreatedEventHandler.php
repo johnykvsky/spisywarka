@@ -3,8 +3,6 @@
 namespace App\EventHandler;
 
 use App\Event\ItemCreatedEvent;
-//use App\Entity\Item;
-use App\Repository\ItemRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Psr\Log\LoggerInterface;
 
@@ -14,11 +12,6 @@ use Psr\Log\LoggerInterface;
  */
 class ItemCreatedEventHandler implements EventHandlerInterface
 {
-   /**
-     * @var ItemRepository
-     */
-    private $repository;
-    
     /**
      * @var MessageBusInterface
      */
@@ -31,12 +24,11 @@ class ItemCreatedEventHandler implements EventHandlerInterface
 
     /**
      * @param MessageBusInterface $eventBus
-     * @param ItemRepository $repository
+     * @param LoggerInterface $logger
      */
-    public function __construct(MessageBusInterface $eventBus, ItemRepository $repository, LoggerInterface $logger)
+    public function __construct(MessageBusInterface $eventBus, LoggerInterface $logger)
     {
         $this->eventBus = $eventBus;
-        $this->repository = $repository;
         $this->logger = $logger;
     }
 

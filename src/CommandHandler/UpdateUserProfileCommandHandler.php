@@ -59,7 +59,7 @@ class UpdateUserProfileCommandHandler implements CommandHandlerInterface
             $user->setEmail($command->getEmail());
 
             if (!empty($command->getPlainPassword())) {
-                $password = $this->encoder->encodePassword($user, $command->getPlainPassword() ?? '');
+                $password = $this->encoder->encodePassword($user, $command->getPlainPassword());
                 $user->setPassword($password);
             }
 
