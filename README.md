@@ -19,6 +19,7 @@ What's included, backend:
 
  * Full Item, Category, Collection, Loan management via JSON API
  * Frontend CRUD use core API backend parts: Commands and CommandHandlers
+ * User management
  * API documentation (Swagger) via /api/doc
  * Full use of Message Bus, Requests, Commands and Command Handlers
  * Support for Event Bus (working, just not doing anything serious)
@@ -32,7 +33,6 @@ What's included, backend:
 
 What's planned:
 
- * User management
  * Allow for multiple users see only their own data (via Doctrine filters)
  * Translations
 
@@ -52,7 +52,7 @@ Current CRUD flow:
 
 ## Install
 
-Download/clone repository, go into, update .env with your database settings and:
+Download/clone repository, go into, copu .env.dist to .env, update .env with your database settings and:
 
 ``` bash
 $ composer install
