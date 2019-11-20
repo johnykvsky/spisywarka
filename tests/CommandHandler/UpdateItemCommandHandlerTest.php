@@ -64,7 +64,8 @@ class UpdateItemCommandHandlerTest extends TestCase
             );
         
         $eventBus = $this->createMock(MessageBusInterface::class);
-        //$eventBus->expects(self::once())->method('dispatch')->withAnyParameters();
+        $eventBus->expects(self::once())->method('dispatch')
+            ->willReturn(new Envelope(new ChildDummyMessage('test')));
         
         $logger = $this->createMock(LoggerInterface::class);
         

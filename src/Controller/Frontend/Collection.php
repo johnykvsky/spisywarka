@@ -51,7 +51,7 @@ class Collection extends AbstractController
 
         return $this->render('frontend/collection.html.twig', [
             'items' => $items ?? null,
-            'collection' => $collection,
+            'collection' => $collection ?? null,
             'error' => $error ?? null
         ]);
     }

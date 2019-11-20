@@ -8,6 +8,7 @@ use App\Repository\ItemRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\ItemNotDeletedException;
 use Psr\Log\LoggerInterface;
+use App\Event\ItemDeletedEvent;
 
 class DeleteItemCommandHandler implements CommandHandlerInterface
 {
@@ -49,6 +50,7 @@ class DeleteItemCommandHandler implements CommandHandlerInterface
             }      
              
             $this->repository->delete($item);
+            $this->eventBus->dispatch(new ItemDeletedEvent($command->getId()->toString()));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
             throw new ItemNotDeletedException('Item was not deleted: '.$e->getMessage());

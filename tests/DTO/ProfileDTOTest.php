@@ -2,11 +2,11 @@
 
 namespace App\Test\Command;
 
-use App\DTO\UserDTO;
+use App\DTO\ProfileDTO;
 use PHPUnit\Framework\TestCase;
 use Faker\Factory;
 
-class UserDTOTest extends TestCase
+class ProfileDTOTest extends TestCase
 {
     /**
      * @throws \Assert\AssertionFailedException
@@ -20,7 +20,7 @@ class UserDTOTest extends TestCase
         $email = $faker->email();
         $plainPassword = $faker->password();
 
-        $dto = new UserDTO($firstName, $lastName, $email, $plainPassword);
+        $dto = new ProfileDTO($firstName, $lastName, $email, $plainPassword);
 
         $this->assertSame($firstName, $dto->getFirstName());
         $this->assertSame($lastName, $dto->getLastName());

@@ -71,7 +71,7 @@
         </div>
       </li>
 
-      <!-- Nav Item - Categories Collapse Menu -->
+      <!-- Nav Item - Collections Collapse Menu -->
       <li class="nav-item {{ activeMenu(['admin_collections', 'admin_collection']) }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCollections" aria-expanded="true" aria-controls="collapseCollections">
           <i class="fas fa-fw fa-sitemap"></i>
@@ -82,6 +82,21 @@
             <h6 class="collapse-header">Manage collections:</h6>
             <a class="collapse-item" href="{{ path('admin_collections') }}">List collections</a>
             <a class="collapse-item" href="{{ path('admin_collection') }}">Add collection</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Users Collapse Menu -->
+      <li class="nav-item {{ activeMenu(['admin_users', 'admin_user']) }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseCollections">
+          <i class="fas fa-fw fa-sitemap"></i>
+          <span>Users</span>
+        </a>
+        <div id="collapseUsers" class="collapse {{ collapseItem(['admin_users', 'admin_user']) }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Manage collections:</h6>
+            <a class="collapse-item" href="{{ path('admin_users') }}">List users</a>
+            <a class="collapse-item" href="{{ path('admin_user') }}">Add user</a>
           </div>
         </div>
       </li>

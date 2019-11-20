@@ -1,20 +1,25 @@
 <?php
 namespace App\Form\Type;
 
-use App\DTO\ProfileDTO;
+use App\DTO\UserDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\DataMapperInterface; 
 use Symfony\Component\Form\FormInterface;
+use App\Entity\Enum\UserStatusEnum;
+use App\Traits\FormEnumChoices;
 
-class UserProfileType extends AbstractType  implements DataMapperInterface
+class UserType extends AbstractType  implements DataMapperInterface
 {
+    use FormEnumChoices;
+
     /**
      * {@inheritdoc}
      */
@@ -24,6 +29,9 @@ class UserProfileType extends AbstractType  implements DataMapperInterface
             ->add('firstName', TextType::class, ['required' => true])
             ->add('lastName', TextType::class, ['required' => true])
             ->add('email', EmailType::class, ['required' => true])
+            ->add('status', ChoiceType::class, [
+                'choices'  =>  $this->getFormChoicesFromEnum(UserStatusEnum::getValues())
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
@@ -41,7 +49,7 @@ class UserProfileType extends AbstractType  implements DataMapperInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ProfileDTO::class,
+            'data_class' => UserDTO::class,
             'empty_data' => null,
         ]);
     }
@@ -54,17 +62,18 @@ class UserProfileType extends AbstractType  implements DataMapperInterface
     /**
      * Maps properties of some data to a list of forms.
      *
-     * @param ProfileDTO $profileDTO Structured data
+     * @param UserDTO $userDTO Structured data
      * @param FormInterface[]|\Traversable $forms A list of {@link FormInterface} instances
      */
-    public function mapDataToForms($profileDTO, $forms): void
+    public function mapDataToForms($userDTO, $forms): void
     {
-        if (!empty($profileDTO)) {
+        if (!empty($userDTO)) {
             $forms = iterator_to_array($forms);
-            $forms['firstName']->setData($profileDTO->getFirstName());
-            $forms['lastName']->setData($profileDTO->getLastName());
-            $forms['email']->setData($profileDTO->getEmail());
-            $forms['plainPassword']->setData($profileDTO->getPlainPassword());
+            $forms['firstName']->setData($userDTO->getFirstName());
+            $forms['lastName']->setData($userDTO->getLastName());
+            $forms['email']->setData($userDTO->getEmail());
+            $forms['status']->setData($userDTO->getStatus()->getValue());
+            $forms['plainPassword']->setData($userDTO->getPlainPassword());
         }
     }
 
@@ -72,15 +81,17 @@ class UserProfileType extends AbstractType  implements DataMapperInterface
      * Maps the data of a list of forms into the properties of some data.
      *
      * @param FormInterface[]|\Traversable $forms A list of {@link FormInterface} instances
-     * @param ProfileDTO $profileDTO Structured data
+     * @param UserDTO $userDTO Structured data
      */
-    public function mapFormsToData($forms, &$profileDTO): void
+    public function mapFormsToData($forms, &$userDTO): void
     {
         $forms = iterator_to_array($forms);
-        $profileDTO = new ProfileDTO(
+        $userDTO = new UserDTO(
+            null, 
             $forms['firstName']->getData(), 
             $forms['lastName']->getData(), 
             $forms['email']->getData(),
+            UserStatusEnum::make($forms['status']->getData()),
             $forms['plainPassword']->getData()
         );
     }

@@ -13,7 +13,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use App\DTO\UserDTO;
+use App\DTO\ProfileDTO;
 use App\Form\Type\UserProfileType;
 use App\Command\UpdateUserProfileCommand;
 
@@ -63,24 +63,24 @@ class AdminProfileController extends AbstractController
             return $this->redirectToRoute('logout');
         }
 
-        $userDTO = new UserDTO(
+        $profileDTO = new ProfileDTO(
             $user->getFirstName(),
             $user->getLastName(),
             $user->getEmail(),
             null
         );
-        $form = $this->createForm(\App\Form\Type\UserProfileType::class, $userDTO);
+        $form = $this->createForm(\App\Form\Type\UserProfileType::class, $profileDTO);
         $form->handleRequest($rawRequest);
 
         try {
             if ($form->isSubmitted() && $form->isValid()) {
-                $userDTO = $form->getData();
+                $profileDTO = $form->getData();
                 $command = new UpdateUserProfileCommand(
                     $user->getId(),
-                    $userDTO->getFirstName(),
-                    $userDTO->getLastName(),
-                    $userDTO->getEmail(),
-                    $userDTO->getPlainPassword()
+                    $profileDTO->getFirstName(),
+                    $profileDTO->getLastName(),
+                    $profileDTO->getEmail(),
+                    $profileDTO->getPlainPassword()
                 );
                 $this->commandBus->dispatch($command);
                 $this->addFlash('success','Your changes were saved!');

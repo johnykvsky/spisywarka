@@ -41,6 +41,9 @@ Class DeleteItemCommandHandlerTest extends TestCase
             ));
 
         $eventBus = $this->createMock(MessageBusInterface::class);
+        $eventBus->expects(self::once())->method('dispatch')
+            ->willReturn(new Envelope(new ChildDummyMessage('test')));
+            
         $logger = $this->createMock(LoggerInterface::class);
         $command = new DeleteItemCommand($id);
         $handler = new DeleteItemCommandHandler($eventBus, $repository, $logger);

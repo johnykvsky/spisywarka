@@ -9,6 +9,7 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use App\Repository\Exception\UserNotFoundException;
 use Ramsey\Uuid\UuidInterface;
+use Doctrine\ORM\Query;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -73,5 +74,26 @@ class UserRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
         $em->remove($user);
         $em->flush();
+    }
+
+    /**
+     * @param string|null $searchQuery
+     * @return Query
+     */
+    public function listAllUsers(?string $searchQuery = ''): Query
+    {
+        if (empty($searchQuery)) {
+            return $this->createQueryBuilder('u')->orderBy('u.lastName' ,'ASC')->getQuery();
+        }
+
+        $qb = $this->createQueryBuilder('u');
+        return $qb->where($qb->expr()->like('u.firstName', ':searchQuery'))
+        ->orWhere($qb->expr()->like('u.lastName', ':searchQuery'))
+        ->orWhere($qb->expr()->like('u.email', ':searchQuery'))
+        ->orderBy('u.lastName' ,'ASC')
+        ->setParameters([
+            'searchQuery' => "%{$searchQuery}%",
+        ])
+        ->getQuery();
     }
 }

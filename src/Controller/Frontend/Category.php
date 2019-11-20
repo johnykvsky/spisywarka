@@ -51,7 +51,7 @@ class Category extends AbstractController
 
         return $this->render('frontend/category.html.twig', [
             'items' => $items ?? null,
-            'category' => $category,
+            'category' => $category ?? null,
             'error' => $error ?? null
         ]);
     }

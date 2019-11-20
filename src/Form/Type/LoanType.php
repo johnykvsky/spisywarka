@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use App\Form\DataTransformer\UuidToItemTransformer;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
-final class LoanType extends AbstractType  implements DataMapperInterface
+class LoanType extends AbstractType  implements DataMapperInterface
 {
     private $transformer;
 

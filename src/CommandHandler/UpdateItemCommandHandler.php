@@ -13,6 +13,7 @@ use App\CommandHandler\Exception\ItemNotUpdatedException;
 use Psr\Log\LoggerInterface;
 use App\Entity\Item;
 use App\Entity\ItemCollection;
+use App\Event\ItemUpdatedEvent;
 
 class UpdateItemCommandHandler implements CommandHandlerInterface
 {
@@ -90,6 +91,7 @@ class UpdateItemCommandHandler implements CommandHandlerInterface
             if (null !== $command->getCollections()) {
                 $this->handleItemCollections($item, $command->getCollections());
             }
+            $this->eventBus->dispatch(new ItemUpdatedEvent($command->getId()->toString()));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
             throw new ItemNotUpdatedException('Item was not updated: '.$e->getMessage());

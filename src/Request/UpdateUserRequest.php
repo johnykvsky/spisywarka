@@ -1,5 +1,6 @@
 <?php
-namespace App\DTO;
+
+namespace App\Request;
 
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
@@ -7,10 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation\Type;
 use App\Entity\Enum\UserStatusEnum;
 
-class UserDTO {
+class UpdateUserRequest
+{
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
+     * @Assert\NotBlank()
      * @Assert\Uuid()
      */
     private $id;
@@ -36,35 +39,35 @@ class UserDTO {
      */
     private $email;
     /**
-     * @var UserStatusEnum
+     * @var string
      * @Type("string")
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
      */
     private $status;
     /**
-     * @var string|null
+     * @var string
      * @Type("string")
+     * @Assert\NotBlank()
      * @Assert\Length(max=255)
      */
     private $plainPassword;
 
-
     /**
-     * UserDTO constructor.
-     * @param string|null $id
+     * UpdateUserRequest constructor.
+     * @param string $id
      * @param string $firstName
      * @param string $lastName
      * @param string $email
-     * @param UserStatusEnum $status
-     * @param string|null $plainPassword
+     * @param string $status
+     * @param string $plainPassword
      */
-    public function __construct(?string $id,
+    public function __construct(string $id,
                                 string $firstName,
                                 string $lastName,
                                 string $email,
-                                UserStatusEnum $status,
-                                ?string $plainPassword)
+                                string $status,
+                                string $plainPassword)
     {
         $this->id = $id;
         $this->firstName = $firstName;
@@ -75,23 +78,11 @@ class UserDTO {
     }
 
     /**
-     * @return ?UuidInterface
+     * @return UuidInterface
      */
-    public function getId(): ?UuidInterface
+    public function getId(): UuidInterface
     {
-        if (!empty($this->id)) {
-            return Uuid::fromString($this->id);
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string|null $id
-    */
-    public function setId(?string $id): void
-    {
-        $this->id = $id;
+        return Uuid::fromString($this->id);
     }
 
     /**
@@ -123,13 +114,13 @@ class UserDTO {
      */
     public function getStatus(): UserStatusEnum
     {
-        return $this->status;
+        return UserStatusEnum::make($this->status);
     }
 
     /**
-     * @return ?string
+     * @return string
      */
-    public function getPlainPassword(): ?string
+    public function getPlainPassword(): string
     {
         return $this->plainPassword;
     }

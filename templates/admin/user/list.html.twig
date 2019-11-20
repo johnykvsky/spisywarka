@@ -1,0 +1,46 @@
+{% extends 'admin_base.html.twig' %} 
+{% block body %}
+
+<form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" value="{% if searchQuery is defined and searchQuery is not empty%}{{ searchQuery }}{% endif %}" type="text" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"">Search</button>
+</form>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <p class="h5">Users</p>
+      </div>
+{% block section %} 
+ 
+<p><a href="{{ path('admin_user', {id: ''}) }}"><button type="button" class="btn btn-info">Create new user</button></a></p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for row in pagination %} 
+    <tr>
+      <td>{{ row.firstName }}</td>
+      <td>{{ row.lastName }}</td>
+      <td>{{ row.email }}</td>
+      <td>{{ row.status.value }}</td>
+      <td>
+      <a href="{{ path('admin_user', {id: row.id}) }}"><button type="button" class="btn btn-success">Edit</button></a> 
+      <a href={{ path('admin_delete_user', {id: row.id}) }}" data-href="{{ path('admin_delete_user', {id: row.id}) }}" data-toggle="modal" data-target="#confirmModal"><button type="button" class="btn btn-danger" >Delete</button></a>
+      </td>
+    </tr>
+{% endfor %} 
+  </tbody>
+</table>
+ 
+<div class="navigation"> 
+{{ knp_pagination_render(pagination) }} 
+</div> 
+ 
+{% endblock %}
+{% endblock %}
