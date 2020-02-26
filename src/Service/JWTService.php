@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use Firebase\JWT\JWT;
-use Ramsey\Uuid\UuidInterface;
 use App\Entity\User;
 use App\Security\ValueObject\TokenPayload;
 

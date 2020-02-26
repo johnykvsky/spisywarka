@@ -7,9 +7,12 @@ use App\Command\CommandInterface;
 use App\Command\CreateItemCommand;
 use App\Command\UpdateItemCommand;
 use Ramsey\Uuid\Uuid;
+use App\Traits\CommandInstanceTrait;
 
 class ItemService
 {
+    use CommandInstanceTrait;
+
     /**
      * @param Item $item
      * @return ItemDTO
@@ -37,34 +40,19 @@ class ItemService
      */
     public function getCommand(ItemDTO $itemDTO):  CommandInterface
     {
-        if (empty($itemDTO->getId())) {
-            return new CreateItemCommand(
-                Uuid::uuid4(),
-                $itemDTO->getName(),
-                $itemDTO->getCategoryId(),
-                $itemDTO->getYear(),
-                $itemDTO->getFormat(),
-                $itemDTO->getAuthor(),
-                $itemDTO->getPublisher(),
-                $itemDTO->getDescription(),
-                $itemDTO->getStore(),
-                $itemDTO->getUrl(),
-                $itemDTO->getCollections()
-            );
-        } else {
-            return new UpdateItemCommand(
-                $itemDTO->getId(),
-                $itemDTO->getName(),
-                $itemDTO->getCategoryId(),
-                $itemDTO->getYear(),
-                $itemDTO->getFormat(),
-                $itemDTO->getAuthor(),
-                $itemDTO->getPublisher(),
-                $itemDTO->getDescription(),
-                $itemDTO->getStore(),
-                $itemDTO->getUrl(),
-                $itemDTO->getCollections()
-            );
-        }
+        $command = $this->getCommandInstance($itemDTO->getId(), 'Item');
+        return $command->newInstanceArgs([
+            $itemDTO->getId() ?? Uuid::uuid4(),
+            $itemDTO->getName(),
+            $itemDTO->getCategoryId(),
+            $itemDTO->getYear(),
+            $itemDTO->getFormat(),
+            $itemDTO->getAuthor(),
+            $itemDTO->getPublisher(),
+            $itemDTO->getDescription(),
+            $itemDTO->getStore(),
+            $itemDTO->getUrl(),
+            $itemDTO->getCollections()
+        ]);
     }
 }

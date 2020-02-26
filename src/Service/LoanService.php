@@ -8,9 +8,12 @@ use App\Command\CreateLoanCommand;
 use App\Command\UpdateLoanCommand;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use App\Traits\CommandInstanceTrait;
 
 class LoanService
 {
+    use CommandInstanceTrait;
+
     /**
      * @param Loan $loan
      * @return LoanDTO
@@ -41,22 +44,13 @@ class LoanService
      */
     public function getCommand(LoanDTO $loanDTO):  CommandInterface
     {
-        if (empty($loanDTO->getId())) {
-            return new CreateLoanCommand(
-                Uuid::uuid4(),
-                $loanDTO->getItemId(),
-                $loanDTO->getLoaner(),
-                $loanDTO->getLoanDate(),
-                $loanDTO->getReturnDate()
-            );
-        }
-        
-        return new UpdateLoanCommand(
-            $loanDTO->getId(),
+        $command = $this->getCommandInstance($loanDTO->getId(), 'Loan');
+        return $command->newInstanceArgs([
+            $loanDTO->getId() ?? Uuid::uuid4(),
             $loanDTO->getItemId(),
             $loanDTO->getLoaner(),
             $loanDTO->getLoanDate(),
             $loanDTO->getReturnDate()
-        );
+        ]);
     }
 }

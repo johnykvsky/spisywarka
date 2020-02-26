@@ -5,7 +5,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 trait RequestQueryTrait
 {
-   public function getFromRequest(Request $request, string $parameter, $urlDecode = false)
+
+   /**
+    * @param  Request $request
+    * @param  string $parameter
+    * @param  bool $urlDecode
+    * @return string|null
+    */
+   public function getFromRequest(Request $request, string $parameter, bool $urlDecode = false): ?string
    {
         $param = $request->query->get($parameter);
         

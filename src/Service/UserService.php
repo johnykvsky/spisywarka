@@ -7,9 +7,12 @@ use App\Command\CommandInterface;
 use App\Command\CreateUserCommand;
 use App\Command\UpdateUserCommand;
 use Ramsey\Uuid\Uuid;
+use App\Traits\CommandInstanceTrait;
 
 class UserService
 {
+    use CommandInstanceTrait;
+
     /**
      * @param User $user
      * @return UserDTO
@@ -32,24 +35,14 @@ class UserService
      */
     public function getCommand(UserDTO $userDTO):  CommandInterface
     {
-        if (empty($userDTO->getId())) {
-            return new CreateUserCommand(
-                Uuid::uuid4(),
-                $userDTO->getFirstName(),
-                $userDTO->getLastName(),
-                $userDTO->getEmail(),
-                $userDTO->getStatus(),
-                $userDTO->getPlainPassword()
-            );
-        } else {
-            return new UpdateUserCommand(
-                $userDTO->getId(),
-                $userDTO->getFirstName(),
-                $userDTO->getLastName(),
-                $userDTO->getEmail(),
-                $userDTO->getStatus(),
-                $userDTO->getPlainPassword()
-            );
-        }
+        $command = $this->getCommandInstance($loanDTO->getId(), 'User');
+        return $command->newInstanceArgs([
+            $userDTO->getId() ?? Uuid::uuid4(),
+            $userDTO->getFirstName(),
+            $userDTO->getLastName(),
+            $userDTO->getEmail(),
+            $userDTO->getStatus(),
+            $userDTO->getPlainPassword()
+        ]);
     }
 }

@@ -7,9 +7,12 @@ use App\Command\CommandInterface;
 use App\Command\CreateCategoryCommand;
 use App\Command\UpdateCategoryCommand;
 use Ramsey\Uuid\Uuid;
+use App\Traits\CommandInstanceTrait;
 
 class CategoryService
 {
+    use CommandInstanceTrait;
+
     /**
      * @param Category $category
      * @return CategoryDTO
@@ -29,18 +32,11 @@ class CategoryService
      */
     public function getCommand(CategoryDTO $categoryDTO):  CommandInterface
     {
-        if (empty($categoryDTO->getId())) {
-            return new CreateCategoryCommand(
-                Uuid::uuid4(),
-                $categoryDTO->getName(),
-                $categoryDTO->getDescription()
-            );
-        } else {
-            return new UpdateCategoryCommand(
-                $categoryDTO->getId(),
-                $categoryDTO->getName(),
-                $categoryDTO->getDescription()
-            );
-        }
+        $command = $this->getCommandInstance($categoryDTO->getId(), 'Category');
+        return $command->newInstanceArgs([
+            $categoryDTO->getId() ?? Uuid::uuid4(),
+            $categoryDTO->getName(),
+            $categoryDTO->getDescription()
+        ]);
     }
 }
