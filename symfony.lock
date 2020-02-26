@@ -5,9 +5,6 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
-    "composer/xdebug-handler": {
-        "version": "1.3.1"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -37,9 +34,6 @@
             "version": "1.6",
             "ref": "453e89b78ded666f351617baca5ae40d20622351"
         }
-    },
-    "doctrine/doctrine-cache-bundle": {
-        "version": "1.3.5"
     },
     "doctrine/doctrine-migrations-bundle": {
         "version": "1.2",
@@ -149,9 +143,6 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jean85/pretty-package-versions": {
-        "version": "1.2"
-    },
     "jms/metadata": {
         "version": "2.0.0"
     },
@@ -194,35 +185,14 @@
             "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
         }
     },
-    "nette/bootstrap": {
-        "version": "v2.4.6"
-    },
-    "nette/di": {
-        "version": "v2.4.14"
-    },
-    "nette/finder": {
-        "version": "v2.4.2"
-    },
-    "nette/neon": {
-        "version": "v2.4.3"
-    },
-    "nette/php-generator": {
-        "version": "v3.0.5"
-    },
-    "nette/robot-loader": {
-        "version": "v3.1.0"
-    },
-    "nette/schema": {
-        "version": "v1.0.0"
-    },
-    "nette/utils": {
-        "version": "v2.5.3"
-    },
     "nikic/php-parser": {
         "version": "v4.1.0"
     },
     "ocramius/proxy-manager": {
         "version": "2.2.2"
+    },
+    "php": {
+        "version": "7.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -232,9 +202,6 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
-    },
-    "phpstan/phpdoc-parser": {
-        "version": "0.3"
     },
     "phpstan/phpstan": {
         "version": "0.10.6"
@@ -346,6 +313,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.2.1"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.4"
     },
     "symfony/event-dispatcher": {
         "version": "v4.2.1"
@@ -521,7 +491,7 @@
         ]
     },
     "symfony/templating": {
-        "version": "v4.3.4"
+        "version": "v4.4.4"
     },
     "symfony/test-pack": {
         "version": "v1.0.5"

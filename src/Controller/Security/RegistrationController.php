@@ -7,14 +7,12 @@ use App\Repository\UserRepository;
 use App\Command\RegisterUserCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Form\FormError;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use App\Service\TokenStorageService;
 
 class RegistrationController extends Controller
 {
@@ -50,20 +48,16 @@ class RegistrationController extends Controller
     /**
      * @Route("/register", name="register", methods={"GET", "POST"})
      */
-    public function register(
-        Request $request,
-        TokenStorageInterface $tokenStorage,
-        SessionInterface $session
-    ) {
+    public function register(Request $request, TokenStorageService $tokenStorageService)
+    {
         $userRegistrationDTO = new UserRegistrationDTO;
         $form = $this->createForm(UserRegistrationType::class, $userRegistrationDTO);
         $form->handleRequest($request);
         try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $userRegistrationDTO = $form->getData();
-                $userId = Uuid::uuid4();
                 $command = new RegisterUserCommand(
-                    $userId,
+                    Uuid::uuid4(),
                     $userRegistrationDTO->getFirstName(),
                     $userRegistrationDTO->getLastName(),
                     $userRegistrationDTO->getEmail(),
@@ -71,11 +65,9 @@ class RegistrationController extends Controller
                 );
 
                 $this->commandBus->dispatch($command);
-                $user = $this->repository->getUser($userId);
+                $user = $this->repository->getUser($command->getId());
                 $this->addFlash('success', "Your accound was created");
-                $token = new UsernamePasswordToken($user, $user->getPassword(), 'main');
-                $tokenStorage->setToken($token);
-                $session->set('_security_main', serialize($token));
+                $tokenStorageService->storeToken($user);
                 return $this->redirectToRoute('admin_dashboard');
             }
         } catch (\Exception $e) {

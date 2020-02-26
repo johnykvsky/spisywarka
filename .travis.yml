@@ -1,0 +1,20 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+
+sudo: false
+
+before_script:
+    - travis_retry composer self-update
+    - travis_retry composer install --no-interaction --prefer-source --dev
+
+script:
+    - vendor/bin/phpunit --coverage-clover=coverage.xml
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - wget https://github.com/phpspec/phpspec/releases/download/4.3.0/phpspec.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+  - php phpspec run

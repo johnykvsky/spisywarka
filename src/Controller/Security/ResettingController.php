@@ -58,6 +58,7 @@ class ResettingController extends Controller
         $form = $this->createForm(NewPasswordType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //TODO: refactor to Command
             $plainPassword = $form->get('password')->getData();
             $password = $encoder->encodePassword($user, $plainPassword);
             $user->setPassword($password);

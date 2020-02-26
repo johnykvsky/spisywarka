@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Tests\Fixtures\ChildDummyMessage;
 use Psr\Log\LoggerInterface;
 
 Class DeleteCollectionCommandHandlerTest extends TestCase

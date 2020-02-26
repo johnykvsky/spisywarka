@@ -15,8 +15,8 @@ use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Tests\Fixtures\ChildDummyMessage;
 use Psr\Log\LoggerInterface;
+use stdClass;
 
 Class DeleteItemCommandHandlerTest extends TestCase
 {
@@ -42,7 +42,7 @@ Class DeleteItemCommandHandlerTest extends TestCase
 
         $eventBus = $this->createMock(MessageBusInterface::class);
         $eventBus->expects(self::once())->method('dispatch')
-            ->willReturn(new Envelope(new ChildDummyMessage('test')));
+            ->willReturn(new Envelope(new stdClass()));
             
         $logger = $this->createMock(LoggerInterface::class);
         $command = new DeleteItemCommand($id);

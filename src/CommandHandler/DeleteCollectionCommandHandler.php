@@ -3,7 +3,6 @@
 namespace App\CommandHandler;
 
 use App\Command\DeleteCollectionCommand;
-//use App\Entity\Collection;
 use App\Repository\CollectionRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\CollectionNotDeletedException;

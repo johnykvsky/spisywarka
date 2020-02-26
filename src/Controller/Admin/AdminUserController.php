@@ -7,7 +7,6 @@ use App\Repository\UserRepository;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -17,7 +16,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Service\UserService;
 use Symfony\Component\Form\FormInterface;
-use Swagger\Annotations as SWG;
 use App\Traits\RequestQueryTrait;
 
 class AdminUserController extends AbstractController

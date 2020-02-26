@@ -3,7 +3,6 @@
 namespace App\CommandHandler;
 
 use App\Command\DeleteItemCommand;
-//use App\Entity\Item;
 use App\Repository\ItemRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\ItemNotDeletedException;

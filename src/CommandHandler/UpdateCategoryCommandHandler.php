@@ -3,7 +3,6 @@
 namespace App\CommandHandler;
 
 use App\Command\UpdateCategoryCommand;
-//use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\CategoryNotUpdatedException;

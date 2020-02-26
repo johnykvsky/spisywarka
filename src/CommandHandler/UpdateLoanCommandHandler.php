@@ -3,7 +3,6 @@
 namespace App\CommandHandler;
 
 use App\Command\UpdateLoanCommand;
-//use App\Entity\Category;
 use App\Repository\LoanRepository;
 use App\Repository\ItemRepository;
 use Symfony\Component\Messenger\MessageBusInterface;

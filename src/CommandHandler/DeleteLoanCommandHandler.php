@@ -3,7 +3,6 @@
 namespace App\CommandHandler;
 
 use App\Command\DeleteLoanCommand;
-//use App\Entity\Category;
 use App\Repository\LoanRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\LoanNotDeletedException;
