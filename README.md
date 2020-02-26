@@ -1,6 +1,9 @@
 # Spisywarka
 
 [![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Quality Score][ico-code-quality]][link-code-quality]
 
 Yet another boilerplate for Symfony (currently: 4.3). It's both, API and admin panel for simple service: manage what do I have, in witch formats I have it, and to whom I have loaned some things. Sometimes it's important to know if book is pdf or epub, was translation made by person A or person B, does this album is first printing from year xxxx or it's a remaster from year yyyy. And to whom I have loaned that book... And did I bought that cd/book or just wanted to, but give it up waiting for discounts... And we can pack things up in collections to see ie. all Fantasy items (books, movies, soundtracks...) or all stuff related to Blade Runner.
 
@@ -96,12 +99,18 @@ If you discover any security related issues, please email johnykvsky@protonmail.
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-
-[link-author]: https://github.com/johnykvsky
-
 ## Preview
 
 ![Listing](https://raw.githubusercontent.com/johnykvsky/spisywarka/master/spisywarka-s1.png)
 
 ![Editing](https://raw.githubusercontent.com/johnykvsky/spisywarka/master/spisywarka-s2.png)
+
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/johnykvsky/spisywarka/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/johnykvsky/spisywarka.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/johnykvsky/spisywarka.svg?style=flat-square
+
+[link-travis]: https://travis-ci.org/johnykvsky/spisywarka
+[link-scrutinizer]: https://scrutinizer-ci.com/g/johnykvsky/spisywarka/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/johnykvsky/spisywarka
+[link-author]: https://github.com/johnykvsky
