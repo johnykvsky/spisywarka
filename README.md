@@ -7,7 +7,7 @@
 
 Yet another boilerplate for Symfony (currently: 4.3). It's both, API and admin panel for simple service: manage what do I have, in witch formats I have it, and to whom I have loaned some things. Sometimes it's important to know if book is pdf or epub, was translation made by person A or person B, does this album is first printing from year xxxx or it's a remaster from year yyyy. And to whom I have loaned that book... And did I bought that cd/book or just wanted to, but give it up waiting for discounts... And we can pack things up in collections to see ie. all Fantasy items (books, movies, soundtracks...) or all stuff related to Blade Runner.
 
-Technical info: Symfony 4.3 on PHP 7.2 with use of Message Bus and UUIDs (no auto increment, yay)
+Technical info: Symfony 4.4 on PHP 7.2 with use of Message Bus and UUIDs (no auto increment, yay)
 
 What's included, frontend:
 
