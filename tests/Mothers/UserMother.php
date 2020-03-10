@@ -5,6 +5,7 @@ namespace App\Tests\Mothers;
 use App\Entity\User;
 use Faker\Factory;
 use Ramsey\Uuid\Uuid;
+use App\Entity\Enum\UserStatusEnum;
 
 final class UserMother
 {
@@ -23,6 +24,7 @@ final class UserMother
         $user->setEmail($faker->email());
         $user->setPlainPassword($faker->password());
         $user->setPassword($faker->password());
+        $user->setStatus(UserStatusEnum::active());
         return $user;
     }
 }

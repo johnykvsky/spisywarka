@@ -30,7 +30,7 @@ class TokenStorageService
     /**
      * @param User $user
      */
-    private function storeToken(User $user): void
+    public function storeToken(User $user): void
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'main');
         $this->tokenStorage->setToken($token);
