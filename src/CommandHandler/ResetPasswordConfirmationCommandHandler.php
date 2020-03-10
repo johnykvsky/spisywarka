@@ -8,7 +8,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\ResetPasswordConfirmationException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
 use App\Repository\Exception\UserNotFoundException;
 use App\Service\TokenStorageService;
