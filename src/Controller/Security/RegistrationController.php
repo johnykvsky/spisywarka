@@ -66,8 +66,8 @@ class RegistrationController extends Controller
 
                 $this->commandBus->dispatch($command);
                 $user = $this->repository->getUser($command->getId());
-                $this->addFlash('success', "Your accound was created");
                 $tokenStorageService->storeToken($user);
+                $this->addFlash('success', "Your accound was created");
                 return $this->redirectToRoute('admin_dashboard');
             }
         } catch (\Exception $e) {
