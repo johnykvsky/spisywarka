@@ -1,4 +1,6 @@
 {
+    "name": "spisywarka",
+    "description": "To know the stuff you have",
     "type": "project",
     "license": "proprietary",
     "require": {
