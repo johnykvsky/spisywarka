@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\Collection;
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", hardDelete=false)
  */
-class Category implements \JsonSerializable
+class Category implements \JsonSerializable, UserAwareInterface
 {
     use HasTimestamps;
     
@@ -56,22 +56,30 @@ class Category implements \JsonSerializable
      * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="category")
      */
     protected $items;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="categories")
+     */
+    private $user;
     
     /**
      * @param UuidInterface $id
      * @param string $name
      * @param ?string $description
+     * @param User $user
      * @throws \Assert\AssertionFailedException
      */
     public function __construct(
         UuidInterface $id,
         string $name,
-        ?string $description
+        ?string $description,
+        User $user
         )
     {
         $this->setId($id);
         $this->setName($name);
         $this->setDescription($description);
+        $this->setUser($user);
     }
 
     /**
@@ -91,6 +99,25 @@ class Category implements \JsonSerializable
     public function getId(): UuidInterface
     {
         return $this->id;
+    }
+
+    /**
+     * @param User $user
+     * @return Category
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
     /**
@@ -165,7 +192,17 @@ class Category implements \JsonSerializable
         return [
             'id' => $this->getId()->toString(),
             'name' => $this->getName(),
-            'description' => $this->getDescription()
+            'description' => $this->getDescription(),
+            'userId' => $this->getUser()->getId()->toString(),
         ];
+    }
+
+    public static function checkOrderField(string $orderField): bool
+    {
+        if (!in_array($orderField, ['name'], true)) {
+            return false;
+        }
+
+        return true;
     }
 }

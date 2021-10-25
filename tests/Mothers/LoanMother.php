@@ -20,12 +20,15 @@ final class LoanMother
 
         $item = ItemMother::random();
 
+        $user = UserMother::random();
+
         return new Loan(
             Uuid::uuid4(),
             $item,
             $faker->name(),
             null,
-            null
+            null,
+            $user
         );
     }
 }

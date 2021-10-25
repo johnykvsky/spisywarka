@@ -8,10 +8,12 @@ use App\CommandHandler\Exception\CollectionNotCreatedException;
 use App\Entity\Collection;
 use App\Repository\CollectionRepository;
 use App\Tests\Mothers\CollectionMother;
+use App\Tests\Mothers\UserMother;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CreateCollectionCommandHandlerTest extends TestCase
 {
@@ -39,8 +41,12 @@ class CreateCollectionCommandHandlerTest extends TestCase
                 )
             );
 
+        $user = UserMother::random();
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturn($user);
+
         $command = new CreateCollectionCommand(
-            $collectionyMock->getId(), $collectionyMock->getName(), $collectionyMock->getDescription()
+            $collectionyMock->getId(), $collectionyMock->getName(), $collectionyMock->getDescription(), $user->getId()
         );
         
         $eventBus = $this->createMock(MessageBusInterface::class);
@@ -48,7 +54,7 @@ class CreateCollectionCommandHandlerTest extends TestCase
         
         $logger = $this->createMock(LoggerInterface::class);
         
-        $handler = new CreateCollectionCommandHandler($eventBus, $repository, $logger);
+        $handler = new CreateCollectionCommandHandler($eventBus, $repository, $logger, $security);
         
         $handler($command);
     }

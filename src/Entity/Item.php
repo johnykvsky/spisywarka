@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", hardDelete=false)
  */
-class Item implements \JsonSerializable
+class Item implements \JsonSerializable, UserAwareInterface
 {
     use HasTimestamps;
     
@@ -105,6 +105,11 @@ class Item implements \JsonSerializable
      * @ORM\OneToOne(targetEntity="App\Entity\Loan", mappedBy="item") 
      */
     protected $loaned;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="items")
+     */
+    private $user;
     
     /**
      * @param UuidInterface $id
@@ -117,6 +122,7 @@ class Item implements \JsonSerializable
      * @param ?string $description
      * @param ?string $store
      * @param ?string $url
+     * @param User $user
      * @throws \Assert\AssertionFailedException
      */
     public function __construct(
@@ -129,7 +135,8 @@ class Item implements \JsonSerializable
         ?string $publisher,
         ?string $description,
         ?string $store,
-        ?string $url
+        ?string $url,
+        User $user
         )
     {
         $this->setId($id);
@@ -142,6 +149,7 @@ class Item implements \JsonSerializable
         $this->setDescription($description);
         $this->setStore($store);
         $this->setUrl($url);
+        $this->setUser($user);
         $this->collections = new ArrayCollection();
     }
     
@@ -181,6 +189,25 @@ class Item implements \JsonSerializable
     public function getCategory(): Category
     {
         return $this->category;
+    }
+
+    /**
+     * @param User $user
+     * @return Item
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
     /**
@@ -408,6 +435,7 @@ class Item implements \JsonSerializable
             'url' => $this->getUrl(),
             'collections' => $this->getItemCollections(),
             'loaned' => $this->getLoaned(),
+            'userId' => $this->getUser()->getId()->toString(),
             'slug' => $this->getSlug(),
         ];
     }

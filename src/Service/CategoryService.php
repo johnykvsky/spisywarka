@@ -7,7 +7,10 @@ use App\Command\CommandInterface;
 use App\Command\CreateCategoryCommand;
 use App\Command\UpdateCategoryCommand;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use App\Traits\CommandInstanceTrait;
+use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
 
 class CategoryService
 {
@@ -36,7 +39,8 @@ class CategoryService
         return $command->newInstanceArgs([
             $categoryDTO->getId() ?? Uuid::uuid4(),
             $categoryDTO->getName(),
-            $categoryDTO->getDescription()
+            $categoryDTO->getDescription(),
+            null
         ]);
     }
 }

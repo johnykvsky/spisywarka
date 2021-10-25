@@ -24,6 +24,9 @@ doctrine:
             softdeleteable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
+            userfilter:
+                class: App\DoctrineFilters\UserFilter
+                enabled: true
         mappings:
             App:
                 is_bundle: false

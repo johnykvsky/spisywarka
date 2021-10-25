@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191006145929 extends AbstractMigration
+final class Version20200412105353 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -21,13 +21,19 @@ final class Version20191006145929 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        $this->addSql('CREATE TABLE user (id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', email VARCHAR(250) NOT NULL, password VARCHAR(250) NOT NULL, password_request_token VARCHAR(250) DEFAULT NULL, roles TEXT DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, deleted_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE category ADD user_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\'');
+        $this->addSql('ALTER TABLE collection ADD user_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\'');
+        $this->addSql('ALTER TABLE item ADD user_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\'');
+        $this->addSql('ALTER TABLE loan ADD user_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\'');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        $this->addSql('DROP TABLE user');
+        $this->addSql('ALTER TABLE category DROP user_id;');
+        $this->addSql('ALTER TABLE collection DROP user_id;');
+        $this->addSql('ALTER TABLE item DROP user_id;');
+        $this->addSql('ALTER TABLE loan DROP user_id;');
     }
 }

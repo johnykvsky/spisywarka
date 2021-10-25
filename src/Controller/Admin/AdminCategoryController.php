@@ -106,7 +106,10 @@ class AdminCategoryController extends AbstractController
     {         
         return $this->render('admin/category/list.html.twig', [ 
             'pagination' => $paginator->paginate(
-             $this->repository->listAllCategories(), $request->query->getInt('page', 1),10) 
+             $this->repository->listAllCategories(
+                $request->query->getAlnum('sort', 'name'),
+                $request->query->getAlnum('dir', 'asc')
+             ), $request->query->getInt('page', 1),10) 
         ]); 
     }
 

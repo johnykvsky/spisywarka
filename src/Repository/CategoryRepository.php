@@ -67,9 +67,13 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @return array
      */
-    public function listAllCategories(): array
+    public function listAllCategories(string $field = 'name', string $dir = 'ASC'): array
     {
-        return $this->findBy([], ['name' => 'ASC']);
+        if (!Category::checkOrderField($field)) {
+            return $this->findBy([], ['name' => 'ASC']);
+        }
+
+        return $this->findBy([], [$field => ($dir === 'DESC' ? 'DESC' : 'ASC')]);
     }
 
     /**

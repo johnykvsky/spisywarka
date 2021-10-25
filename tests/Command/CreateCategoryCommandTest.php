@@ -17,7 +17,8 @@ class CreateCategoryCommandTest extends TestCase
     {
         $category = CategoryMother::random()->jsonSerialize();
         $command = new CreateCategoryCommand(
-            Uuid::fromString($category['id']), $category['name'], $category['description']);
+            Uuid::fromString($category['id']), $category['name'], $category['description'], Uuid::uuid4()
+        );
         $this->assertSame($category['id'], (string) $command->getId());
         $this->assertSame($category['name'], $command->getName());
         $this->assertSame($category['description'], $command->getDescription());

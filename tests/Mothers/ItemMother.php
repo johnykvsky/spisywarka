@@ -17,6 +17,7 @@ final class ItemMother
     {
         $category = CategoryMother::random();
         $faker = Factory::create('en_GB');
+        $user = UserMother::random();
         return new Item(
             Uuid::uuid4(),
             $faker->title(),
@@ -27,7 +28,8 @@ final class ItemMother
             $faker->company(),
             $faker->text(255),
             $faker->company(),
-            $faker->url()
+            $faker->url(),
+            $user
         );
     }
 }

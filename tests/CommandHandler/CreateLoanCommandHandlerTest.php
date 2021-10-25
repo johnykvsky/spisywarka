@@ -9,11 +9,13 @@ use App\Entity\Loan;
 use App\Repository\LoanRepository;
 use App\Repository\ItemRepository;
 use App\Tests\Mothers\LoanMother;
+use App\Tests\Mothers\UserMother;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CreateLoanCommandHandlerTest extends TestCase
 {
@@ -43,6 +45,10 @@ class CreateLoanCommandHandlerTest extends TestCase
                 )
             );
 
+        $user = UserMother::random();
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturn($user);
+
         $command = new CreateLoanCommand(
             $loanMock->getId(), 
             $loanMock->getItem()->getId(), 
@@ -54,7 +60,7 @@ class CreateLoanCommandHandlerTest extends TestCase
         $logger = $this->createMock(LoggerInterface::class);
         $eventBus = $this->createMock(MessageBusInterface::class);
         
-        $handler = new CreateLoanCommandHandler($eventBus, $repository, $logger, $itemRepository);
+        $handler = new CreateLoanCommandHandler($eventBus, $repository, $logger, $itemRepository, $security);
         
         $handler($command);
     }

@@ -7,5 +7,24 @@
 {% if id is defined and id is not empty%}
     <p><code>id: {{ id }}</code></p>
 {% endif %}
-{{ form(form) }}
+{{ form_start(form) }}
+    <div id="category">
+        <div class="form-errors">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="form-group row">
+            {{ form_label(form.name) }}
+            <div class="col-sm-4">
+                {{ form_widget(form.name) }}
+            </div>
+        </div>
+        <div class="form-group row">
+            {{ form_label(form.description) }}
+            <div class="col-sm-4">
+                {{ form_widget(form.description) }}
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}
 {% endblock %}

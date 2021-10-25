@@ -7,11 +7,14 @@ use App\CommandHandler\CreateCategoryCommandHandler;
 use App\CommandHandler\Exception\CategoryNotCreatedException;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
 use App\Tests\Mothers\CategoryMother;
+use App\Tests\Mothers\UserMother;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CreateCategoryCommandHandlerTest extends TestCase
 {
@@ -39,8 +42,12 @@ class CreateCategoryCommandHandlerTest extends TestCase
                 )
             );
 
+        $user = UserMother::random();
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturn($user);
+
         $command = new CreateCategoryCommand(
-            $categoryMock->getId(), $categoryMock->getName(), $categoryMock->getDescription()
+            $categoryMock->getId(), $categoryMock->getName(), $categoryMock->getDescription(), $user->getId()
         );
         
         $eventBus = $this->createMock(MessageBusInterface::class);
@@ -48,7 +55,7 @@ class CreateCategoryCommandHandlerTest extends TestCase
         
         $logger = $this->createMock(LoggerInterface::class);
         
-        $handler = new CreateCategoryCommandHandler($eventBus, $repository, $logger);
+        $handler = new CreateCategoryCommandHandler($eventBus, $repository, $logger, $security);
         
         $handler($command);
     }

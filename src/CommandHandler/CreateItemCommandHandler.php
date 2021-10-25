@@ -13,6 +13,7 @@ use App\CommandHandler\Exception\ItemNotCreatedException;
 use Psr\Log\LoggerInterface;
 use App\Repository\CategoryRepository;
 use App\Repository\CollectionRepository;
+use Symfony\Component\Security\Core\Security;
 
 class CreateItemCommandHandler implements CommandHandlerInterface
 {
@@ -40,6 +41,10 @@ class CreateItemCommandHandler implements CommandHandlerInterface
      * @var ItemCollectionRepository
      */
     private $itemCollectionRepository; 
+    /**
+     * @var Security
+     */
+    private $security;
 
     /**
      * @param MessageBusInterface $eventBus
@@ -55,14 +60,16 @@ class CreateItemCommandHandler implements CommandHandlerInterface
         LoggerInterface $logger,
         CategoryRepository $categoryRepository,
         CollectionRepository $collectionRepository,
-        ItemCollectionRepository $itemCollectionRepository)
-    {
+        ItemCollectionRepository $itemCollectionRepository,
+        Security $security
+    ) {
         $this->eventBus = $eventBus;
         $this->repository = $repository;
         $this->logger = $logger;
         $this->categoryRepository = $categoryRepository;
         $this->collectionRepository = $collectionRepository;
         $this->itemCollectionRepository = $itemCollectionRepository;
+        $this->security = $security;
     }
 
     /**
@@ -72,6 +79,8 @@ class CreateItemCommandHandler implements CommandHandlerInterface
     {
         try {
             $category = $this->categoryRepository->getCategory($command->getCategoryId());
+            $user = $this->security->getUser();
+            
             $item = new Item(
                 $command->getId(),
                 $command->getName(),
@@ -82,7 +91,8 @@ class CreateItemCommandHandler implements CommandHandlerInterface
                 $command->getPublisher(),
                 $command->getDescription(),
                 $command->getStore(),
-                $command->getUrl()
+                $command->getUrl(),
+                $user
                 );
    
             if (null !== $command->getCollections()) {

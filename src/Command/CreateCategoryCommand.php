@@ -18,21 +18,28 @@ class CreateCategoryCommand implements CommandInterface
      * @var ?string
      */
     private $description;
+    /**
+     * @var ?UuidInterface
+     */
+    private $userId;
 
     /**
      * @param UuidInterface $id
      * @param string $name
      * @param ?string $description
+     * @param ?UuidInterface $userId
      */
     public function __construct(
         UuidInterface $id,
         string $name,
-        ?string $description
+        ?string $description,
+        ?UuidInterface $userId
     )
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
+        $this->userId = $userId;
     }
 
     /**
@@ -57,5 +64,13 @@ class CreateCategoryCommand implements CommandInterface
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * @return ?UuidInterface
+     */
+    public function getUserId(): ?UuidInterface
+    {
+        return $this->userId;
     }
 }

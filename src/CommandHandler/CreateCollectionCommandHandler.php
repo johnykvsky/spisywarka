@@ -8,6 +8,7 @@ use App\Repository\CollectionRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\CollectionNotCreatedException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CreateCollectionCommandHandler implements CommandHandlerInterface
 {
@@ -23,17 +24,22 @@ class CreateCollectionCommandHandler implements CommandHandlerInterface
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var Security
+     */
+    private $security;
 
     /**
      * @param MessageBusInterface $eventBus
      * @param CollectionRepository $repository
      * @param LoggerInterface $logger
      */
-    public function __construct(MessageBusInterface $eventBus, CollectionRepository $repository, LoggerInterface $logger)
+    public function __construct(MessageBusInterface $eventBus, CollectionRepository $repository, LoggerInterface $logger, Security $security)
     {
         $this->eventBus = $eventBus;
         $this->repository = $repository;
         $this->logger = $logger;
+        $this->security = $security;
     }
 
     /**
@@ -42,10 +48,13 @@ class CreateCollectionCommandHandler implements CommandHandlerInterface
     public function __invoke(CreateCollectionCommand $command)
     {
         try {
+            $user = $this->security->getUser();
+
             $collection = new Collection(
                 $command->getId(),
                 $command->getName(),
-                $command->getDescription()
+                $command->getDescription(),
+                $user
                 );
             $this->repository->save($collection);
         } catch (\Exception $e) {

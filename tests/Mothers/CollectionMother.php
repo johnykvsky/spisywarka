@@ -16,10 +16,12 @@ final class CollectionMother
     public static function random(): Collection
     {
         $faker = Factory::create('en_GB');
+        $user = UserMother::random();
         return new Collection(
             Uuid::uuid4(),
             $faker->title(),
-            $faker->text(255)
+            $faker->text(255),
+            $user
         );
     }
 }

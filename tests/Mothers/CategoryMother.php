@@ -15,11 +15,13 @@ final class CategoryMother
      */
     public static function random(): Category
     {
+        $user = UserMother::random();
         $faker = Factory::create('en_GB');
         return new Category(
             Uuid::uuid4(),
             $faker->title(),
-            $faker->text(255)
+            $faker->text(255),
+            $user
         );
     }
 }

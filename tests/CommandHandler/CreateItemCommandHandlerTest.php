@@ -11,12 +11,14 @@ use App\Repository\CollectionRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ItemCollectionRepository;
 use App\Tests\Mothers\ItemMother;
+use App\Tests\Mothers\UserMother;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Psr\Log\LoggerInterface;
 use stdClass;
+use Symfony\Component\Security\Core\Security;
 
 class CreateItemCommandHandlerTest extends TestCase
 {
@@ -56,6 +58,10 @@ class CreateItemCommandHandlerTest extends TestCase
                 )
             );
 
+        $user = UserMother::random();
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturn($user);
+
         $command = new CreateItemCommand(
             $itemMock->getId(), $itemMock->getName(), $itemMock->getCategory()->getId(), $itemMock->getYear(), $itemMock->getFormat(),
             $itemMock->getAuthor(), $itemMock->getPublisher(), $itemMock->getDescription(),
@@ -68,7 +74,7 @@ class CreateItemCommandHandlerTest extends TestCase
         
         $logger = $this->createMock(LoggerInterface::class);
         
-        $handler = new CreateItemCommandHandler($eventBus, $repository, $logger, $categoryRepository, $collectionRepository, $itemCollectionRepository);
+        $handler = new CreateItemCommandHandler($eventBus, $repository, $logger, $categoryRepository, $collectionRepository, $itemCollectionRepository, $security);
         
         $handler($command);
     }

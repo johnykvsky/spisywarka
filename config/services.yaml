@@ -52,3 +52,16 @@ services:
         arguments:
             - '%env(SSO_JWT_PRIVATE_KEY)%'
             - '%env(SSO_JWT_ALGORITHM)%'
+
+    app.security:
+      class: Symfony\Component\Security\Core\Security
+
+    before_request_listener:
+        class: App\EventListener\BeforeRequestListener
+        #arguments: ["@doctrine.orm.entity_manager", "@app.security"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]
+        tags:
+            -
+                name: kernel.event_listener
+                event: kernel.controller
+                method: onKernelController

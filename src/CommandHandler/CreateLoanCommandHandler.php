@@ -9,6 +9,7 @@ use App\Repository\ItemRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\CommandHandler\Exception\LoanNotCreatedException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CreateLoanCommandHandler implements CommandHandlerInterface
 {
@@ -28,6 +29,10 @@ class CreateLoanCommandHandler implements CommandHandlerInterface
      * @var ItemRepository
      */
     private $itemRepository;
+    /**
+     * @var Security
+     */
+    private $security;
 
     /**
      * @param MessageBusInterface $eventBus
@@ -39,13 +44,15 @@ class CreateLoanCommandHandler implements CommandHandlerInterface
         MessageBusInterface $eventBus, 
         LoanRepository $repository, 
         LoggerInterface $logger,
-        ItemRepository $itemRepository
+        ItemRepository $itemRepository,
+        Security $security
         )
     {
         $this->eventBus = $eventBus;
         $this->repository = $repository;
         $this->logger = $logger;
         $this->itemRepository = $itemRepository;
+        $this->security = $security;
     }
 
     /**
@@ -55,12 +62,15 @@ class CreateLoanCommandHandler implements CommandHandlerInterface
     {
         try {
             $item = $this->itemRepository->getItem($command->getItemId());
+            $user = $this->security->getUser();
+            
             $loan = new Loan(
                 $command->getId(),
                 $item,
                 $command->getLoaner(),
                 $command->getLoanDate(),
-                $command->getReturnDate()
+                $command->getReturnDate(),
+                $user
                 );
             $this->repository->save($loan);
         } catch (\Exception $e) {

@@ -18,7 +18,7 @@ use App\Traits\HasTimestamps;
  * )
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", hardDelete=false)
  */
-class Loan implements \JsonSerializable
+class Loan implements \JsonSerializable, UserAwareInterface
 {
     use HasTimestamps;
 
@@ -58,11 +58,17 @@ class Loan implements \JsonSerializable
     private $deletedAt;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="loans")
+     */
+    private $user;
+
+    /**
      * @param UuidInterface $id
      * @param Item $item
      * @param string $loaner
      * @param \DateTime $loanDate
      * @param \DateTime $returnDate
+     * @param User $user
      * @throws \Assert\AssertionFailedException
      */
     public function __construct(
@@ -70,7 +76,8 @@ class Loan implements \JsonSerializable
         Item $item,
         ?string $loaner,
         ?\DateTime $loanDate,
-        ?\DateTime $returnDate
+        ?\DateTime $returnDate,
+        User $user
         )
     {
         $this->setId($id);
@@ -78,6 +85,7 @@ class Loan implements \JsonSerializable
         $this->setLoaner($loaner);
         $this->setLoanDate($loanDate);
         $this->setReturnDate($returnDate);
+        $this->setUser($user);
     }
 
     /**
@@ -97,6 +105,25 @@ class Loan implements \JsonSerializable
     public function getId(): UuidInterface
     {
         return $this->id;
+    }
+
+    /**
+     * @param User $user
+     * @return Loan
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
     /**
@@ -246,6 +273,7 @@ class Loan implements \JsonSerializable
             'loaner' => $this->getLoaner(),
             'loanDate' => $this->getLoanDate(),
             'returnDate' => $this->getReturnDate(),
+            'userId' => $this->getUser()->getId()->toString(),
         ];
     }
 }
