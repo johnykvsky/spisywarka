@@ -478,6 +478,9 @@
             "ref": "0e548dd90adba18fabd4ef419b14d361fe4d6c74"
         }
     },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.23.1"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.12.0"
     },
@@ -552,6 +555,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.2.5"
+    },
+    "symfony/string": {
+        "version": "v5.3.7"
     },
     "symfony/swiftmailer-bundle": {
         "version": "2.5",
