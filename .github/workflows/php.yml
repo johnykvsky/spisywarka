@@ -41,7 +41,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: ctype, iconv, pdo, mbstring, json
-          coverage: pcov
+          coverage: xdebug
 
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
