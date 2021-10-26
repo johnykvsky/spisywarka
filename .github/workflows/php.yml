@@ -26,22 +26,31 @@ jobs:
           - 7.4
         composer:
           - ""
+        stability:
+          - prefer-stable
+
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Create Docker Container
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ctype, iconv, pdo, mbstring, json
+          coverage: pcov
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      - name: Execute tests
+        run: vendor/bin/phpunit --verbose --coverage-clover=coverage.clover
+
+      - name: Code coverage
+        if: ${{ github.ref == 'refs/heads/master' && matrix.php != 8.0 && github.repository == 'johnykvsky/spisywarka' }}
         run: |
-          docker build . -t ci-image --build-arg PHP_VERSION=${{ matrix.php }}
-          docker run --interactive --detach --volume ${{ github.workspace }}:/app --name ci ci-image
-
-      - name: Install Dependencies
-        run: docker exec ci composer update --no-interaction --no-ansi --prefer-dist ${{ matrix.composer }}
-
-      - name: PHPUnit
-        run: docker exec ci vendor/bin/phpunit
-
-      - name: Composer Validate
-        run: docker exec ci composer validate --strict
+          wget https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
