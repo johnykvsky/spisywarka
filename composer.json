@@ -10,7 +10,7 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "beberlei/assert": "^3.2.6",
-        "firebase/php-jwt": "^5.0.0",
+        "firebase/php-jwt": "^6.0.0",
         "friendsofsymfony/rest-bundle": "^3.1.0",
         "guzzlehttp/guzzle": "^6.5.2",
         "jms/serializer-bundle": "~3.5.0",
